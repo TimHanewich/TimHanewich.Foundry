@@ -9,20 +9,20 @@ using System.Net;
 
 namespace TimHanewich.AgentFramework.Responses
 {
-    public class AzureOpenAIConnection : IModelConnection
+    public class Deployment
     {
         public string Endpoint {get; set;}
         public string DeploymentName {get; set;}
         public string ApiKey {get; set;}
 
-        public AzureOpenAIConnection()
+        public Deployment()
         {
             Endpoint = "";
             DeploymentName = "";
             ApiKey = "";
         }
 
-        public AzureOpenAIConnection(string endpoint, string deployment_name, string api_key)
+        public Deployment(string endpoint, string deployment_name, string api_key)
         {
             Endpoint = endpoint;
             DeploymentName = deployment_name;
