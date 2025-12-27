@@ -22,17 +22,17 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             ToolCall ToReturn = new ToolCall();
 
             //Get tool name
-            JToken? name = tool_call.SelectToken("function.name");
+            JProperty? name = tool_call.Property("name");
             if (name != null)
             {
-                ToReturn.ToolName = name.ToString();
+                ToReturn.ToolName = name.Value.ToString();
             }
 
             //Get arguments
-            JToken? arguments = tool_call.SelectToken("function.arguments");
+            JProperty? arguments = tool_call.Property("arguments");
             if (arguments != null)
             {
-                string arguments_json = arguments.ToString();
+                string arguments_json = arguments.Value.ToString();
                 ToReturn.Arguments = JObject.Parse(arguments_json);
             }
 
