@@ -20,6 +20,33 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Content = content;
         }
 
+        public JObject ToJSON()
+        {
+            JObject ToReturn = new JObject();
+
+            //Role
+            if (Role == Role.developer)
+            {
+                ToReturn.Add("role", "developer");
+            }
+            else if (Role == Role.user)
+            {
+                ToReturn.Add("role", "user");    
+            }
+            else if (Role == Role.assistant)
+            {
+                ToReturn.Add("role", "assistant");    
+            }
+
+            //content
+            if (Content != null)
+            {
+                ToReturn.Add("content", Content);
+            }
+
+            return ToReturn;
+        }
+
         public static Message Parse(JObject Message)
         {
             Message ToReturn = new Message();
@@ -41,10 +68,6 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 {
                     ToReturn.Role = Role.assistant;
                 }
-                else if (rolestr == "tool")
-                {
-                    ToReturn.Role = Role.tool;
-                }
             }
 
             //Get content
@@ -59,6 +82,5 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 
             return ToReturn;
         }
-    
     }
 }
