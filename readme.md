@@ -7,6 +7,8 @@ Below are some examples on how to use this library:
 ### Basic Prompting
 Below shows the basic set up and prompting process:
 ```
+using TimHanewich.Foundry.OpenAI.Responses;
+
 //Define the deployment
 Deployment d = new Deployment();
 d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
@@ -47,6 +49,8 @@ Now, you might ask why it don’t look violet if violet scatters even more — w
 ### Follow-up Message
 To then continue the conversation with a follow up message, you must specify the `previous_response_id` property:
 ```
+using TimHanewich.Foundry.OpenAI.Responses;
+
 //Define the deployment
 Deployment d = new Deployment();
 d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
@@ -87,6 +91,8 @@ When the sun is risin’ or settin’, its light has to travel through lots more
 ### Function Calling
 You can also achieve function-calling functionality (a.k.a. tool calling) like so:
 ```
+using TimHanewich.Foundry.OpenAI.Responses;
+
 //Define the deployment
 Deployment d = new Deployment();
 d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
@@ -144,6 +150,8 @@ Arguments: {"zip_code":"98004"}
 After the model decides to make a tool call, you must provide it with the *result* of the tool call. After getting that result, you provide the result like so:
 
 ```
+using TimHanewich.Foundry.OpenAI.Responses;
+
 //Define the deployment
 Deployment d = new Deployment();
 d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
@@ -207,6 +215,8 @@ If you’d like a forecast (hourly or 7-day), current conditions summary (wind, 
 ### Getting Structured Outputs ("JSON Mode")
 You can request a structured output, as JSON, like so:
 ```
+using TimHanewich.Foundry.OpenAI.Responses;
+
 //Define the deployment
 Deployment d = new Deployment();
 d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
