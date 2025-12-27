@@ -28,116 +28,117 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 
         public async Task<InferenceResponse> InvokeInferenceAsync(Message[] inputs, Tool[] tools, bool json_mode)
         {
-            HttpRequestMessage req = new HttpRequestMessage();
-            req.Method = HttpMethod.Post;
-            req.RequestUri = new Uri(Endpoint);
-            req.Headers.Add("api-key", ApiKey);
+            return new InferenceResponse();
+            // HttpRequestMessage req = new HttpRequestMessage();
+            // req.Method = HttpMethod.Post;
+            // req.RequestUri = new Uri(Endpoint);
+            // req.Headers.Add("api-key", ApiKey);
 
-            JObject body = new JObject();
+            // JObject body = new JObject();
 
-            //Add inputs
-            JArray jinputs = new JArray();
-            foreach (Message msg in inputs)
-            {
-                //Create and add
-                JObject ThisMsg = new JObject();
-                jinputs.Add(ThisMsg);
+            // //Add inputs
+            // JArray jinputs = new JArray();
+            // foreach (Message msg in inputs)
+            // {
+            //     //Create and add
+            //     JObject ThisMsg = new JObject();
+            //     jinputs.Add(ThisMsg);
 
-                //Add role
-                ThisMsg.Add("role", msg.Role.ToString());
+            //     //Add role
+            //     ThisMsg.Add("role", msg.Role.ToString());
 
-                //add content
-                ThisMsg.Add("content", msg.Content);
+            //     //add content
+            //     ThisMsg.Add("content", msg.Content);
 
-                //Add tool calls
-                if (msg.ToolCalls.Length > 0)
-                {
-                    JArray tool_calls = new JArray();
-                    ThisMsg.Add("tool_calls", tool_calls);
-                    foreach (ToolCall tc in msg.ToolCalls)
-                    {
-                        JObject tool_call = new JObject();
+            //     //Add tool calls
+            //     if (msg.ToolCalls.Length > 0)
+            //     {
+            //         JArray tool_calls = new JArray();
+            //         ThisMsg.Add("tool_calls", tool_calls);
+            //         foreach (ToolCall tc in msg.ToolCalls)
+            //         {
+            //             JObject tool_call = new JObject();
 
-                        //Add type and ID
-                        tool_call.Add("type", "function");
-                        tool_call.Add("id", tc.ID);
+            //             //Add type and ID
+            //             tool_call.Add("type", "function");
+            //             tool_call.Add("id", tc.ID);
 
-                        //function
-                        JObject function = new JObject();
-                        tool_call.Add("function", function);
-                        function.Add("name", tc.ToolName);
-                        function.Add("arguments", tc.Arguments.ToString()); //add arguments as JSON-encoded string (this is how it is supposed to be, per API specification)
+            //             //function
+            //             JObject function = new JObject();
+            //             tool_call.Add("function", function);
+            //             function.Add("name", tc.ToolName);
+            //             function.Add("arguments", tc.Arguments.ToString()); //add arguments as JSON-encoded string (this is how it is supposed to be, per API specification)
 
-                        tool_calls.Add(tool_call);
-                    }
-                }
+            //             tool_calls.Add(tool_call);
+            //         }
+            //     }
 
-                //Add tool call ID?
-                if (msg.ToolCallID != null)
-                {
-                    ThisMsg.Add("tool_call_id", msg.ToolCallID);
-                }
-            }
-            body.Add("inputs", jinputs);
+            //     //Add tool call ID?
+            //     if (msg.ToolCallID != null)
+            //     {
+            //         ThisMsg.Add("tool_call_id", msg.ToolCallID);
+            //     }
+            // }
+            // body.Add("inputs", jinputs);
 
-            //Add tools
-            if (tools.Length > 0)
-            {
-                JArray jtools = new JArray();
-                foreach (Tool tool in tools)
-                {
-                    jtools.Add(tool.ToJSON());
-                }
-                body.Add("tools", jtools);
-            }
+            // //Add tools
+            // if (tools.Length > 0)
+            // {
+            //     JArray jtools = new JArray();
+            //     foreach (Tool tool in tools)
+            //     {
+            //         jtools.Add(tool.ToJSON());
+            //     }
+            //     body.Add("tools", jtools);
+            // }
 
-            //Json mode?
-            if (json_mode)
-            {
-                JObject response_format = new JObject();
-                response_format.Add("type", "json_object");
-                body.Add("response_format", response_format);
-            }
+            // //Json mode?
+            // if (json_mode)
+            // {
+            //     JObject response_format = new JObject();
+            //     response_format.Add("type", "json_object");
+            //     body.Add("response_format", response_format);
+            // }
 
-            //Make API call
-            req.Content = new StringContent(body.ToString(), Encoding.UTF8, "application/json"); //add body to request body
-            HttpClient hc = new HttpClient();
-            hc.Timeout = new TimeSpan(24, 0, 0);
-            HttpResponseMessage resp = await hc.SendAsync(req);
-            string content = await resp.Content.ReadAsStringAsync();
-            if (resp.StatusCode != HttpStatusCode.OK)
-            {
-                throw new Exception("Call to model failed with code '" + resp.StatusCode.ToString() + "'. Msg: " + content);
-            }
-            JObject contentjo = JObject.Parse(content);
+            // //Make API call
+            // req.Content = new StringContent(body.ToString(), Encoding.UTF8, "application/json"); //add body to request body
+            // HttpClient hc = new HttpClient();
+            // hc.Timeout = new TimeSpan(24, 0, 0);
+            // HttpResponseMessage resp = await hc.SendAsync(req);
+            // string content = await resp.Content.ReadAsStringAsync();
+            // if (resp.StatusCode != HttpStatusCode.OK)
+            // {
+            //     throw new Exception("Call to model failed with code '" + resp.StatusCode.ToString() + "'. Msg: " + content);
+            // }
+            // JObject contentjo = JObject.Parse(content);
 
-            //To return
-            InferenceResponse ToReturn = new InferenceResponse();
+            // //To return
+            // InferenceResponse ToReturn = new InferenceResponse();
 
-            //Get prompt tokens
-            JToken? prompt_tokens = contentjo.SelectToken("usage.prompt_tokens");
-            if (prompt_tokens != null)
-            {
-                ToReturn.PromptTokensConsumed = Convert.ToInt32(prompt_tokens.ToString());
-            }
+            // //Get prompt tokens
+            // JToken? prompt_tokens = contentjo.SelectToken("usage.prompt_tokens");
+            // if (prompt_tokens != null)
+            // {
+            //     ToReturn.PromptTokensConsumed = Convert.ToInt32(prompt_tokens.ToString());
+            // }
 
-            //Get completion tokens
-            JToken? completion_tokens = contentjo.SelectToken("usage.completion_tokens");
-            if (completion_tokens != null)
-            {
-                ToReturn.CompletionTokensConsumed = Convert.ToInt32(completion_tokens.ToString());
-            }
+            // //Get completion tokens
+            // JToken? completion_tokens = contentjo.SelectToken("usage.completion_tokens");
+            // if (completion_tokens != null)
+            // {
+            //     ToReturn.CompletionTokensConsumed = Convert.ToInt32(completion_tokens.ToString());
+            // }
             
-            //Strip out message portion
-            JToken? message = contentjo.SelectToken("choices[0].message");
-            if (message == null)
-            {
-                throw new Exception("Property 'message' not in model's response. Full content of response: " + contentjo.ToString());
-            }
-            JObject ResponseMessage = (JObject)message;
-            ToReturn.Message = Message.Parse(ResponseMessage);
+            // //Strip out message portion
+            // JToken? message = contentjo.SelectToken("choices[0].message");
+            // if (message == null)
+            // {
+            //     throw new Exception("Property 'message' not in model's response. Full content of response: " + contentjo.ToString());
+            // }
+            // JObject ResponseMessage = (JObject)message;
+            // ToReturn.Message = Message.Parse(ResponseMessage);
 
-            return ToReturn;
+            // return ToReturn;
         }
     }
 }
