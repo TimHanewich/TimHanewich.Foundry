@@ -1,6 +1,6 @@
 using System;
 
-namespace TimHanewich.AgentFramework.Responses
+namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public enum Role
     {

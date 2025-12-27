@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace TimHanewich.AgentFramework.Responses
+namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public class Tool
     {

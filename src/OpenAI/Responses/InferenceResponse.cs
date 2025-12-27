@@ -1,6 +1,6 @@
 using System;
 
-namespace TimHanewich.AgentFramework.Responses
+namespace TimHanewich.Foundry.OpenAI.Responses
 {
     //A collection of data that comes back from an API call to an LLM service
     public class InferenceResponse

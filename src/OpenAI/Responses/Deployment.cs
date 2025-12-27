@@ -7,7 +7,7 @@ using System.Text;
 using System.Net.Http;
 using System.Net;
 
-namespace TimHanewich.AgentFramework.Responses
+namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public class Deployment
     {

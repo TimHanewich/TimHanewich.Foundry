@@ -1,6 +1,6 @@
 using System;
 
-namespace TimHanewich.AgentFramework.Responses
+namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public class Exchange //represents an exchange of data between the AI and the party using it (could be conversational message, a tool call, etc.)
     {
