@@ -3,6 +3,12 @@
 
 A lightweight .NET library for interfacing with LLM deployments in Microsoft Foundry (formerly *Azure AI Foundry*)!
 
+## Installing
+`TimHanewich.Foundry` is [available on Nuget](https://www.nuget.org/packages/TimHanewich.Foundry)! Installing it is easy, simply run:
+```
+dotnet add package TimHanewich.Foundry --version 0.1.0
+```
+
 ## Example Use
 Below are some examples on how to use this library:
 
