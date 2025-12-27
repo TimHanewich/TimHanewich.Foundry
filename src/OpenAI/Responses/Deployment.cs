@@ -83,11 +83,16 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                     continue; //skip ahead to the next item in the array (skip this one)
                 }
 
-                //Is it a function call
-                if (type.Value.ToString() == "function_call")
+                //Parse based on type
+                if (type.Value.ToString() == "function_call") // function call?
                 {
                     ToolCall tc = ToolCall.Parse(jo);
                     outputs.Add(tc);
+                }
+                else if (type.Value.ToString() == "message") //message?
+                {
+                    Message msg = Message.Parse(jo);
+                    outputs.Add(msg);
                 }
             }
             ToReturn.Outputs = outputs.ToArray();

@@ -47,12 +47,12 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             return ToReturn;
         }
 
-        public static Message Parse(JObject Message)
+        public static Message Parse(JObject msg)
         {
             Message ToReturn = new Message();
 
             //get role
-            JProperty? role = Message.Property("role");
+            JProperty? role = msg.Property("role");
             if (role != null)
             {
                 string rolestr = role.Value.ToString();
@@ -70,14 +70,11 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 }
             }
 
-            //Get content
-            JProperty? content = Message.Property("content");
-            if (content != null)
+            //Get text content
+            JToken? output_text = msg.SelectToken("content[0].text");
+            if (output_text != null)
             {
-                if (content.Value.Type != JTokenType.Null)
-                {
-                    ToReturn.Content = content.Value.ToString();
-                }
+                ToReturn.Content = output_text.ToString();
             }
 
             return ToReturn;
