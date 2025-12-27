@@ -4,10 +4,45 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <Version>0.1.0</Version>
+    <Title>TimHanewich.Foundry</Title>
+    <Authors>TimHanewich</Authors>
+    <Description>A lightweight .NET library for interfacing with LLM deployments in Microsoft Foundry (formerly Azure AI Foundry).</Description>
+    <Copyright>Tim Hanewich</Copyright>
+    <PackageProjectUrl>https://github.com/TimHanewich/TimHanewich.Foundry</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/TimHanewich/TimHanewich.Foundry</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>foundry,microsoft foundry,azure ai foundry, azure openai, llm, openai, responses api</PackageTags>
+    <PackageLicenseFile>license.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\license.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
