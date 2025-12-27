@@ -7,17 +7,17 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class Message : Exchange
     {
         public Role Role {get; set;}
-        public string? Content {get; set;}
+        public string? Text {get; set;}
 
         public Message()
         {
             
         }
 
-        public Message(Role role, string content)
+        public Message(Role role, string text)
         {
             Role = role;
-            Content = content;
+            Text = text;
         }
 
         public JObject ToJSON()
@@ -38,10 +38,10 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 ToReturn.Add("role", "assistant");    
             }
 
-            //content
-            if (Content != null)
+            //Text
+            if (Text != null)
             {
-                ToReturn.Add("content", Content);
+                ToReturn.Add("Text", Text);
             }
 
             return ToReturn;
@@ -70,11 +70,11 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 }
             }
 
-            //Get text content
-            JToken? output_text = msg.SelectToken("content[0].text");
+            //Get text Text
+            JToken? output_text = msg.SelectToken("Text[0].text");
             if (output_text != null)
             {
-                ToReturn.Content = output_text.ToString();
+                ToReturn.Text = output_text.ToString();
             }
 
             return ToReturn;
