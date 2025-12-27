@@ -23,6 +23,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public override JObject ToJSON()
         {
             JObject ToReturn = new JObject();
+            ToReturn.Add("type", "function_call_output");
             ToReturn.Add("call_id", CallId);
             ToReturn.Add("output", Output);
             return ToReturn;
