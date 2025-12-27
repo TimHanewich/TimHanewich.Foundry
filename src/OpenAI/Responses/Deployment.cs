@@ -52,6 +52,13 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             //To return
             Response ToReturn = new Response();
 
+            //Get the response id
+            JProperty? prop_id = contentjo.Property("id");
+            if (prop_id != null)
+            {
+                ToReturn.Id = prop_id.Value.ToString();
+            }
+
             //Get input tokens
             JToken? input_tokens = contentjo.SelectToken("usage.input_tokens");
             if (input_tokens != null)
