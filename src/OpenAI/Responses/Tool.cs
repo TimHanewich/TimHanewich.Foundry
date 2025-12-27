@@ -29,17 +29,18 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         {
             JObject ToReturn = new JObject();
 
+            //Type
             ToReturn.Add("type", "function");
 
-            //larger function
-            JObject function = new JObject();
-            ToReturn.Add("function", function);
-            function.Add("name", Name);
-            function.Add("description", Description);
+            //Name
+            ToReturn.Add("name", Name);
+
+            //Description
+            ToReturn.Add("description", Description);
 
             //parameters
             JObject parameters = new JObject();
-            function.Add("parameters", parameters);
+            ToReturn.Add("parameters", parameters);
             parameters.Add("type", "object");
 
             //properties
