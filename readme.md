@@ -257,4 +257,4 @@ Response: {"first": "Harold", "last": "Gargon"}
 Note, the OpenAI responses API also supports the `json_schema` format in which you can specify an exact schema it must conform to - but that is not supported in this library yet!
 
 ## Other Resources
-- [Banner, designed in PPT]()
+- [Banner, designed in PPT](https://github.com/TimHanewich/TimHanewich.Foundry/releases/download/1/banner.pptx)
