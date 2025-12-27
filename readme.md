@@ -1,4 +1,6 @@
 # TimHanewich.Foundry
+![banner](https://i.imgur.com/URuvzhE.png)
+
 A lightweight .NET library for interfacing with LLM deployments in Microsoft Foundry (formerly *Azure AI Foundry*)!
 
 ## Example Use
