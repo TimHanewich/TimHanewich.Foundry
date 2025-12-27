@@ -5,15 +5,17 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public class ResponseRequest
     {
-        public string Model {get; set;}
+        public string? PreviousResponseID {get; set;}
+        public List<Message> Messages {get; set;}
         public List<Tool> Tools {get; set;}
-        public List<Exchange> Exchanges {get; set;}
+        public ReasoningEffort? ReasoningEffort {get; set;}
 
         public ResponseRequest()
         {
-            Model = string.Empty;
+            PreviousResponseID = null;
             Tools = new List<Tool>();
-            Exchanges = new List<Exchange>();
+            Messages = new List<Message>();
+            ReasoningEffort = null;
         }
     }
 }
