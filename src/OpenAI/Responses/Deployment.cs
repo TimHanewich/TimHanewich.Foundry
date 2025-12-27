@@ -67,17 +67,30 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             }
 
             //Get outputs
+            List<Exchange> outputs = new List<Exchange>();
             JToken? output_selection = contentjo.SelectToken("output");
             if (output_selection == null)
             {
                 throw new Exception("Property 'message' not in model's response. Full content of response: " + contentjo.ToString());
             }
-            JArray outputs = (JArray)output_selection;
-            foreach (JObject jo in outputs)
+            JArray outputs_ja = (JArray)output_selection;
+            foreach (JObject jo in outputs_ja)
             {
-                Console.WriteLine(jo.ToString());
-                Console.ReadLine();
+                //Get type
+                JProperty? type = jo.Property("type");
+                if (type == null)
+                {
+                    continue; //skip ahead to the next item in the array (skip this one)
+                }
+
+                //Is it a function call
+                if (type.Value.ToString() == "function_call")
+                {
+                    ToolCall tc = ToolCall.Parse(jo);
+                    outputs.Add(tc);
+                }
             }
+            ToReturn.Outputs = outputs.ToArray();
 
             return ToReturn;
 
