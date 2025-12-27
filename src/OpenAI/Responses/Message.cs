@@ -41,7 +41,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             //Text
             if (Text != null)
             {
-                ToReturn.Add("Text", Text);
+                ToReturn.Add("content", Text);
             }
 
             return ToReturn;
