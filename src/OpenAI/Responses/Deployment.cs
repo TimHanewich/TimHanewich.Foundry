@@ -12,20 +12,17 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class Deployment
     {
         public string Endpoint {get; set;}
-        public string DeploymentName {get; set;}
         public string ApiKey {get; set;}
 
         public Deployment()
         {
             Endpoint = "";
-            DeploymentName = "";
             ApiKey = "";
         }
 
-        public Deployment(string endpoint, string deployment_name, string api_key)
+        public Deployment(string endpoint, string api_key)
         {
             Endpoint = endpoint;
-            DeploymentName = deployment_name;
             ApiKey = api_key;
         }
 

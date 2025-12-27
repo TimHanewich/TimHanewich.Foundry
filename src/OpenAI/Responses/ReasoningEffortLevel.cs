@@ -2,7 +2,7 @@ using System;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
-    public enum ReasoningEffort
+    public enum ReasoningEffortLevel
     {
         Low = 0,
         Medium = 1,
