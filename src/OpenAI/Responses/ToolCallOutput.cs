@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
@@ -18,5 +19,14 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             CallId = call_id;
             Output = output;
         }
+
+        public override JObject ToJSON()
+        {
+            JObject ToReturn = new JObject();
+            ToReturn.Add("call_id", CallId);
+            ToReturn.Add("output", Output);
+            return ToReturn;
+        }
+
     }
 }
