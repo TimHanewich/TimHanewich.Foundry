@@ -4,28 +4,28 @@ using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.AgentFramework.Responses
 {
-    public class Dialog : Message
+    public class Message : Exchange
     {
         public Role Role {get; set;}
         public string? Content {get; set;}
 
-        public Dialog()
+        public Message()
         {
             
         }
 
-        public Dialog(Role role, string content)
+        public Message(Role role, string content)
         {
             Role = role;
             Content = content;
         }
 
-        public static Dialog Parse(JObject Dialog)
+        public static Message Parse(JObject Message)
         {
-            Dialog ToReturn = new Dialog();
+            Message ToReturn = new Message();
 
             //get role
-            JProperty? role = Dialog.Property("role");
+            JProperty? role = Message.Property("role");
             if (role != null)
             {
                 string rolestr = role.Value.ToString();
@@ -48,7 +48,7 @@ namespace TimHanewich.AgentFramework.Responses
             }
 
             //Get content
-            JProperty? content = Dialog.Property("content");
+            JProperty? content = Message.Property("content");
             if (content != null)
             {
                 if (content.Value.Type != JTokenType.Null)
