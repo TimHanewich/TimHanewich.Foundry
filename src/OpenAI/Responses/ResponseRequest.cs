@@ -11,6 +11,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public List<Exchange> Inputs {get; set;}
         public List<Tool> Tools {get; set;}
         public ReasoningEffortLevel? ReasoningEffort {get; set;}
+        public ResponseFormat RequestedFormat {get; set;}
 
         public ResponseRequest()
         {
@@ -19,6 +20,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Tools = new List<Tool>();
             Inputs = new List<Exchange>();
             ReasoningEffort = null;
+            RequestedFormat = ResponseFormat.Text; //default to text
         }
 
         //Prepares a responses request as a JSON object that can be sent to a Foundry OpenAI LLM service
@@ -74,6 +76,20 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                     effort.Add("effort", "high");
                 }
                 ToReturn.Add("reasoning", effort);
+            }
+
+            //Requested format
+            if (RequestedFormat == ResponseFormat.Text)
+            {
+                //do nothing! By default, it is in text. Do nothing to save bandwidth on the call.
+            }
+            else if (RequestedFormat == ResponseFormat.JsonObject)
+            {
+                JObject type = new JObject();
+                type.Add("type", "json_object");
+                JObject format = new JObject();
+                format.Add("format", type);
+                ToReturn.Add("text", format);
             }
 
             return ToReturn;
