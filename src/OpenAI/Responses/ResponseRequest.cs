@@ -35,13 +35,27 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 ToReturn.Add("previous_response_id", PreviousResponseID);
             }
 
-            //Messages
-            JArray messages = new JArray();
-            foreach (Message msg in Messages)
+            //Messages (inputs)
+            if (Messages.Count > 0)
             {
-                messages.Add(msg.ToJSON());
+                JArray messages = new JArray();
+                foreach (Message msg in Messages)
+                {
+                    messages.Add(msg.ToJSON());
+                }
+                ToReturn.Add("input", messages);
             }
-            ToReturn.Add("input", messages);
+            
+            //Tools
+            if (Tools.Count > 0)
+            {
+                JArray tools = new JArray();
+                foreach (Tool tool in Tools)
+                {
+                    tools.Add(tool.ToJSON());
+                }
+                ToReturn.Add("tools", tools);
+            }
 
             //Reasoning effort
             if (ReasoningEffort != null)
