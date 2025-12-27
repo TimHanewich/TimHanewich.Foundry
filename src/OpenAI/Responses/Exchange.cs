@@ -1,4 +1,6 @@
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
@@ -7,6 +9,12 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public Exchange()
         {
             
+        }
+
+        //Basic overridable function
+        public virtual JObject ToJSON()
+        {
+            return new JObject();
         }
     }
 }

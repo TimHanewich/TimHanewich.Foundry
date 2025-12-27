@@ -8,7 +8,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     {
         public string Model {get; set;}
         public string? PreviousResponseID {get; set;}
-        public List<Message> Messages {get; set;}
+        public List<Exchange> Inputs {get; set;}
         public List<Tool> Tools {get; set;}
         public ReasoningEffortLevel? ReasoningEffort {get; set;}
 
@@ -17,7 +17,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Model = string.Empty;
             PreviousResponseID = null;
             Tools = new List<Tool>();
-            Messages = new List<Message>();
+            Inputs = new List<Exchange>();
             ReasoningEffort = null;
         }
 
@@ -35,15 +35,15 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 ToReturn.Add("previous_response_id", PreviousResponseID);
             }
 
-            //Messages (inputs)
-            if (Messages.Count > 0)
+            //Inputs
+            if (Inputs.Count > 0)
             {
-                JArray messages = new JArray();
-                foreach (Message msg in Messages)
+                JArray inputs = new JArray();
+                foreach (Exchange input in Inputs)
                 {
-                    messages.Add(msg.ToJSON());
+                    inputs.Add(input.ToJSON());
                 }
-                ToReturn.Add("input", messages);
+                ToReturn.Add("input", inputs);
             }
             
             //Tools
