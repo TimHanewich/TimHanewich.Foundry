@@ -14,7 +14,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Name = "";
             ParameterType = "string";
             Description = "";
-            Required = false;
+            Required = true;
         }
 
         public ToolInputParameter(string name, string description, string parameter_type = "string")
