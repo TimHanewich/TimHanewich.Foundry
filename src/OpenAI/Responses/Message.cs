@@ -71,7 +71,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             }
 
             //Get text Text
-            JToken? output_text = msg.SelectToken("Text[0].text");
+            JToken? output_text = msg.SelectToken("content[0].text");
             if (output_text != null)
             {
                 ToReturn.Text = output_text.ToString();
