@@ -7,12 +7,14 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public string Name {get; set;} //The name of the input parameter (JSON property name)
         public string ParameterType {get; set;} //i.e. string, number
         public string Description {get; set;} //Description of what this parameter is
+        public bool Required {get; set;} //if this is a required parameter or not (means the LLM must fill it out)
 
         public ToolInputParameter()
         {
             Name = "";
             ParameterType = "string";
             Description = "";
+            Required = false;
         }
 
         public ToolInputParameter(string name, string description, string parameter_type = "string")

@@ -54,12 +54,15 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 InfoAboutThisTIP.Add("description", tip.Description);
             }
 
-            //required (assuming all are required)
+            //required
             JArray required = new JArray();
             parameters.Add("required", required);
             foreach (ToolInputParameter tip in Parameters)
             {
-                required.Add(tip.Name);
+                if (tip.Required)
+                {
+                    required.Add(tip.Name);  
+                }
             }
 
             return ToReturn;
