@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.AgentFramework.Responses
 {
-    public class ToolCall : Output
+    public class ToolCall : Message
     {
         public string ToolName {get; set;}      //parameter "name"
         public JObject Arguments {get; set;}    //parameter "arguments"
