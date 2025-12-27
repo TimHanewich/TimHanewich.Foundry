@@ -6,14 +6,14 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class InferenceResponse
     {
         public string Id {get; set;} // id of the response
-        public Message[] Outputs {get; set;}
+        public Exchange[] Outputs {get; set;}
         public int InputTokensConsumed {get; set;}
         public int OutputTokensConsumed {get; set;}
 
         public InferenceResponse()
         {
             Id = string.Empty;
-            Outputs = new Message[]{};
+            Outputs = new Exchange[]{};
         }
     }
 }
