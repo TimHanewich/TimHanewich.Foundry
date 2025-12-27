@@ -18,7 +18,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Model = string.Empty;
             PreviousResponseID = null;
             Tools = new List<Tool>();
-            Inputs = new List<Exchange>();
+            Inputs = new List<Exchange>(); //for messages, tool call responses, etc.
             ReasoningEffort = null;
             RequestedFormat = ResponseFormat.Text; //default to text
         }
