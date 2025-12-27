@@ -20,7 +20,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Text = text;
         }
 
-        public JObject ToJSON()
+        public override JObject ToJSON()
         {
             JObject ToReturn = new JObject();
 
