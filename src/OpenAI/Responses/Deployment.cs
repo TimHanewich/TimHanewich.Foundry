@@ -12,18 +12,28 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class Deployment
     {
         public string Endpoint {get; set;}
-        public string ApiKey {get; set;}
+        public string? ApiKey {get; set;}
+        public string? AccessToken {get; set;}
 
         public Deployment()
         {
             Endpoint = "";
-            ApiKey = "";
+            ApiKey = null;
+            AccessToken = null;
         }
 
-        public Deployment(string endpoint, string api_key)
+        public Deployment(string endpoint)
+        {
+            Endpoint = endpoint;
+            ApiKey = null;
+            AccessToken = null;
+        }
+
+        public Deployment(string endpoint, string? api_key = null, string? access_token = null)
         {
             Endpoint = endpoint;
             ApiKey = api_key;
+            AccessToken = access_token;
         }
 
         public async Task<Response> CreateResponseAsync(ResponseRequest request)
