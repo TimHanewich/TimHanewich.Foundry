@@ -42,7 +42,7 @@ rr.Inputs.Add(new Message(Role.developer, "Talk like a cowboy.")); //system prom
 rr.Inputs.Add(new Message(Role.user, "Hi! Why is the sky blue?")); //user prompt
 
 //Call to API service
-Response r = d.CreateResponseAsync(rr).Result;
+Response r = await d.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -84,7 +84,7 @@ rr.PreviousResponseID = "resp_05c65468f65bdb3c006950294d66948196ac0afea12bfba22d
 rr.Inputs.Add(new Message(Role.user, "I'm still not getting it. Can you explain it to me like I am 5 years old?")); //user message
 
 //Call to API service
-Response r = d.CreateResponseAsync(rr).Result;
+Response r = await d.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -132,7 +132,7 @@ CheckWeather.Parameters.Add(new ToolInputParameter("zip_code", "Zip code of the 
 rr.Tools.Add(CheckWeather);
 
 //Call to API service
-Response r = d.CreateResponseAsync(rr).Result;
+Response r = await d.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -194,7 +194,7 @@ CheckWeather.Parameters.Add(new ToolInputParameter("zip_code", "Zip code of the 
 rr.Tools.Add(CheckWeather);
 
 //Call to API service
-Response r = d.CreateResponseAsync(rr).Result;
+Response r = await d.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -250,7 +250,7 @@ rr.Inputs.Add(new Message(Role.user, "Parse out the first and last name and prov
 rr.RequestedFormat = ResponseFormat.JsonObject; //specify you want a JSON object output ('JSON mode')
 
 //Call to API service
-Response r = d.CreateResponseAsync(rr).Result;
+Response r = await d.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
