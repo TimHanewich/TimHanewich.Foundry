@@ -39,17 +39,24 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public async Task<Response> CreateResponseAsync(ResponseRequest request)
         {
 
-            //An API Key OR Access Token must be provided - at least one of them
-            if (ApiKey == null && AccessToken == null)
-            {
-                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry deployment at '" + Endpoint + "'. One of these is required to authenticate with the Foundry service!");
-            }
-
             //Prepare HTTP Request
             HttpRequestMessage req = new HttpRequestMessage();
             req.Method = HttpMethod.Post;
             req.RequestUri = new Uri(Endpoint);
-            req.Headers.Add("api-key", ApiKey);
+
+            //Plug in authentication
+            if (ApiKey != null)
+            {
+                req.Headers.Add("api-key", ApiKey);
+            }
+            else if (AccessToken != null)
+            {
+                req.Headers.Add("Authorization", "Bearer " + AccessToken);
+            }
+            else // If neither are provided
+            {
+                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry deployment at '" + Endpoint + "'. One of these is required to authenticate with the Foundry service!");
+            }    
 
             //Add body
             req.Content = new StringContent(request.ToJSON().ToString(), Encoding.UTF8, "application/json");
