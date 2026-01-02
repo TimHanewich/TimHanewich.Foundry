@@ -8,9 +8,9 @@
 
 ### Key Features
 - 🔑 **Flexible Auth**: Native support for both API Key and Microsoft Entra ID (Service Principals).
-- 🧵 **Smart Context**: Simple conversation tracking using the PreviousResponseID property.
+- 🧵 **Smart Context**: Simple conversation tracking using the responses API's `previous_response_id`.
 - 🛠️ **Native Tooling**: Strongly-typed classes for Function Calling and tool result handling.
-- 📦 **Structured Data**: Built-in support for JSON Mode to ensure predictable model outputs.
+- 📦 **Structured Data**: Built-in support for JSON Mode for structured model outputs.
 - 🚀 **Modern .NET**: Built from the ground up to support the latest .NET 10+ features.
 
 ### Why use this over the standard OpenAI SDK?
