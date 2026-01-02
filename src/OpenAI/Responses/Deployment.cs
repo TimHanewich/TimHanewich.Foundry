@@ -12,8 +12,8 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class Deployment
     {
         public string Endpoint {get; set;}
-        public string? ApiKey {get; set;}
-        public string? AccessToken {get; set;}
+        public string? ApiKey {get; set;}           //API key directly provided by the Foundry portal
+        public string? AccessToken {get; set;}      //Access token obtained using Entra ID Authentication (Service Principal-based)
 
         public Deployment()
         {
@@ -38,6 +38,12 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 
         public async Task<Response> CreateResponseAsync(ResponseRequest request)
         {
+
+            //An API Key OR Access Token must be provided - at least one of them
+            if (ApiKey == null && AccessToken == null)
+            {
+                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry deployment at '" + Endpoint + "'. One of these is required to authenticate with the Foundry service!");
+            }
 
             //Prepare HTTP Request
             HttpRequestMessage req = new HttpRequestMessage();
