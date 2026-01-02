@@ -45,7 +45,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             req.RequestUri = new Uri(Endpoint);
 
             //Plug in authentication
-            if (ApiKey != null)
+            if (ApiKey != null) //default to using the API key (i.e. if they provide both for some reason, use API key)
             {
                 req.Headers.Add("api-key", ApiKey);
             }
