@@ -265,5 +265,66 @@ Response: {"first": "Harold", "last": "Gargon"}
 
 Note, the OpenAI responses API also supports the `json_schema` format in which you can specify an exact schema it must conform to - but that is not supported in this library yet!
 
+## Example Use: Entra ID Authentication
+In addition to supporting Foundry's **API-key** based authentication, this library also supports **keyless authentication** using Microsoft Entra ID. See [this article](https://timhanewich.medium.com/how-to-use-microsoft-foundry-via-entra-id-authentication-with-step-by-step-screenshots-f6d381d50f3a) for further information about this authentication type, its advantages, and how it works.
+
+To authenticate:
+```
+using TimHanewich.Foundry;
+
+EntraAuthenticationHandler eah = new EntraAuthenticationHandler();
+eah.TenantID = "29506ab9-d072-41d6-aead-eeda9fe7e789";
+eah.ClientID = "53766182-cf31-4718-b16b-c1ff0050ba8d";
+eah.ClientSecret = "4r24Q~1T.hOYCtUhdAds3a~eHxw3wP_MECQjWbLZ";
+TokenCredential credential = await eah.AuthenticateAsync();
+```
+
+The `TokenCredential` class handles expiration checks (generally the access token expires in ~24 hours):
+```
+Console.WriteLine("Token credential expires at " + credential.Expires.ToString());
+Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToString());
+```
+
+You can then provide that access token to use your model deployment like so:
+
+```
+//Authenticate
+EntraAuthenticationHandler eah = new EntraAuthenticationHandler();
+eah.TenantID = "29506ab9-d072-41d6-aead-eeda9fe7e789";
+eah.ClientID = "53766182-cf31-4718-b16b-c1ff0050ba8d";
+eah.ClientSecret = "4r24Q~1T.hOYCtUhdAds3a~eHxw3wP_MECQjWbLZ";
+TokenCredential credential = await eah.AuthenticateAsync();
+
+//Check if expired
+Console.WriteLine("Token credential expires at " + credential.Expires.ToString());
+Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToString());
+
+
+//Define the deployment
+Deployment d = new Deployment();
+d.Endpoint = "https://my-foundry-resource.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
+d.AccessToken = credential.AccessToken;
+
+//Create a response request (uses the Responses API)
+ResponseRequest rr = new ResponseRequest();
+rr.Model = "gpt-5-mini"; //the name of your particular deployment in Foundry
+rr.Inputs.Add(new Message(Role.user, "Why is the sky blue?"));
+
+//Call to API service
+Response r = await d.CreateResponseAsync(rr);
+
+//Print response info
+Console.WriteLine("Response ID: " + r.Id);
+Console.WriteLine("Input tokens consumed: " + r.InputTokensConsumed.ToString());
+Console.WriteLine("Output tokens consumed: " + r.OutputTokensConsumed.ToString());
+foreach (Exchange exchange in r.Outputs) //loop through all outputs (output could be a message, function call, etc.)
+{
+    if (exchange is Message msg) //if this output is a Message
+    {
+        Console.WriteLine("Response: " + msg.Text);
+    }
+}
+```
+
 ## Other Resources
 - [Banner, designed in PPT](https://github.com/TimHanewich/TimHanewich.Foundry/releases/download/1/banner.pptx)
