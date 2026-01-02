@@ -281,8 +281,8 @@ TokenCredential credential = await eah.AuthenticateAsync();
 
 The `TokenCredential` class handles expiration checks (generally the access token expires in ~24 hours):
 ```
-Console.WriteLine("Token credential expires at " + credential.Expires.ToString());
-Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToString());
+Console.WriteLine("Token credential expires at " + credential.Expires.ToString());         // "1/3/2026 9:31:12 AM"
+Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToString());    // False
 ```
 
 You can then provide that access token to use your model deployment like so:
@@ -296,8 +296,8 @@ eah.ClientSecret = "4r24Q~1T.hOYCtUhdAds3a~eHxw3wP_MECQjWbLZ";
 TokenCredential credential = await eah.AuthenticateAsync();
 
 //Check if expired
-Console.WriteLine("Token credential expires at " + credential.Expires.ToString());
-Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToString());
+Console.WriteLine("Token credential expires at " + credential.Expires.ToString());         // "1/3/2026 9:31:12 AM"
+Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToString());    // False
 
 
 //Define the deployment
