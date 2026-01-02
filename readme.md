@@ -4,10 +4,20 @@
 ![Framework](https://img.shields.io/badge/Framework-.NET%2010.0-512bd4)
 ![NuGet Version](https://img.shields.io/nuget/v/TimHanewich.Foundry)
 
-A lightweight .NET library for interfacing with LLM deployments in Microsoft Foundry (formerly *Azure AI Foundry*).
+**TimHanewich.Foundry** is a lightweight .NET library designed specifically for interfacing with LLM deployments in Microsoft Foundry (formerly *Azure AI Foundry*). It streamlines the process of communicating with Foundry services, providing a clean, strongly-typed interface for modern .NET applications.
+
+### Key Features
+- 🔑 Flexible Auth: Native support for both API Key and Microsoft Entra ID (Service Principals).
+- 🧵 Smart Context: Simple conversation tracking using the PreviousResponseID property.
+- 🛠️ Native Tooling: Strongly-typed classes for Function Calling and tool result handling.
+- 📦 Structured Data: Built-in support for JSON Mode to ensure predictable model outputs.
+- 🚀 Modern .NET: Built from the ground up to support the latest .NET 10+ features.
+
+### Why use this over the standard OpenAI SDK?
+While generic SDKs exist, **TimHanewich.Foundry** is purpose-built for the unique nuances of the Microsoft Foundry ecosystem. It simplifies the authentication handshake for Entra ID and provides a flatter, more intuitive object model for developers who want to get up and running without the overhead of enterprise-scale boilerplate.
 
 ## Installing
-`TimHanewich.Foundry` is [available on Nuget](https://www.nuget.org/packages/TimHanewich.Foundry)! Installing it is easy, simply run:
+`TimHanewich.Foundry` is [available on Nuget](https://www.nuget.org/packages/TimHanewich.Foundry)! Installing is easy, simply run:
 ```
 dotnet add package TimHanewich.Foundry
 ```
