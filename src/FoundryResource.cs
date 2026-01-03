@@ -24,16 +24,22 @@ namespace TimHanewich.Foundry
 
         public FoundryResource(string endpoint)
         {
-            Endpoint = endpoint;
+            Endpoint = StripUrlToBase(endpoint);
             ApiKey = null;
             AccessToken = null;
         }
 
         public FoundryResource(string endpoint, string? api_key = null, string? access_token = null)
         {
-            Endpoint = endpoint;
+            Endpoint = StripUrlToBase(endpoint);
             ApiKey = api_key;
             AccessToken = access_token;
-        }   
+        }
+
+        private string StripUrlToBase(string original) //strips down to just the ".com" portion, nothing after
+        {
+            Uri u = new Uri(original);
+            return u.GetLeftPart(UriPartial.Authority);
+        }
     }
 }
