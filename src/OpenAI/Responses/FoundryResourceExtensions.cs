@@ -11,10 +11,16 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public static async Task<Response> CreateResponseAsync(this FoundryResource fr, ResponseRequest request)
         {
 
+            //Prepare URL endpoint we will call to
+            UriBuilder builder = new UriBuilder(fr.Endpoint);
+            builder.Path = "/openai/responses";
+            builder.Query = "api-version=2025-04-01-preview";
+            string endpoint = builder.Uri.ToString();
+
             //Prepare HTTP Request
             HttpRequestMessage req = new HttpRequestMessage();
             req.Method = HttpMethod.Post;
-            req.RequestUri = new Uri(fr.Endpoint);
+            req.RequestUri = new Uri(endpoint);
 
             //Plug in authentication
             if (fr.ApiKey != null) //default to using the API key (i.e. if they provide both for some reason, use API key)
