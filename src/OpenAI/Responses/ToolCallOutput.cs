@@ -3,18 +3,18 @@ using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
-    public class ToolCallOutput : Exchange
+    public class FunctionCallOutput : Exchange
     {
         public string CallId {get; set;}
         public string Output {get; set;}
 
-        public ToolCallOutput()
+        public FunctionCallOutput()
         {
             CallId = string.Empty;
             Output = string.Empty;
         }
 
-        public ToolCallOutput(string call_id, string output)
+        public FunctionCallOutput(string call_id, string output)
         {
             CallId = call_id;
             Output = output;
