@@ -144,12 +144,12 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
     {
         Console.WriteLine("Response: " + msg.Text);
     }
-    else if (exchange is FunctionCall tc) //if it is a tool call
+    else if (exchange is FunctionCall fc) //if it is a function call
     {
         Console.WriteLine();
-        Console.WriteLine("Tool call received:");
-        Console.WriteLine("Tool Name: " + tc.FunctionName);
-        Console.WriteLine("Tool Call ID: " + tc.CallId);
+        Console.WriteLine("Function call received:");
+        Console.WriteLine("Function Name: " + tc.FunctionName);
+        Console.WriteLine("Function Call ID: " + tc.CallId);
         Console.WriteLine("Arguments: " + tc.Arguments.ToString(Formatting.None));
     }
 }
@@ -181,9 +181,9 @@ fr.ApiKey = "6ElIJZ2jsMM...";
 //Create a response request (uses the Responses API)
 ResponseRequest rr = new ResponseRequest();
 rr.Model = "gpt-5-mini-testing"; //the name of your particular deployment in Foundry
-rr.PreviousResponseID = "resp_0c5335a67e04df960069502ab72a108194bffc93b794cc1a97"; //previous response ID (the response that contained the tool call) - this provides conversational history!
+rr.PreviousResponseID = "resp_0c5335a67e04df960069502ab72a108194bffc93b794cc1a97"; //previous response ID (the response that contained the function call) - this provides conversational history!
 
-//Add the results of the "CheckWeather" tool 
+//Add the results of the "CheckWeather" function you have
 rr.Inputs.Add(new FunctionCallOutput("call_GYUF82w0DDdrV3Yf1YJo22OW", "{'temperature': 72.4, 'humidity': 55.4, 'precipitation_inches': 2.4}"));
 
 //Add the "CheckWeather" custom function to the tools the model has available to it
@@ -209,9 +209,9 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
     else if (exchange is FunctionCall fc) //if it is a function call
     {
         Console.WriteLine();
-        Console.WriteLine("Tool call received:");
-        Console.WriteLine("Tool Name: " + fc.FunctionName);
-        Console.WriteLine("Tool Call ID: " + fc.CallId);
+        Console.WriteLine("Function call received:");
+        Console.WriteLine("Function Name: " + fc.FunctionName);
+        Console.WriteLine("Function Call ID: " + fc.CallId);
         Console.WriteLine("Arguments: " + fc.Arguments.ToString(Formatting.None));
     }
 }
