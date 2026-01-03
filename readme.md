@@ -110,7 +110,7 @@ When the sun is risin’ or settin’, its light has to travel through lots more
 ```
 
 ### Function Calling
-You can also achieve function-calling functionality (a.k.a. tool calling) like so:
+You can also achieve function-calling functionality like so:
 ```
 using TimHanewich.Foundry;
 using TimHanewich.Foundry.OpenAI.Responses;
@@ -124,8 +124,8 @@ ResponseRequest rr = new ResponseRequest();
 rr.Model = "gpt-5-mini-testing"; //the name of your particular deployment in Foundry
 rr.Inputs.Add(new Message(Role.user, "What is the weather in 98004?")); //user message
 
-//Add the "CheckWeather" tool as a tool (function) the model has available to it
-Tool CheckWeather = new Tool();
+//Add the "CheckWeather" custom function to the tools the model has available to it
+Function CheckWeather = new Function();
 CheckWeather.Name = "CheckWeather";
 CheckWeather.Description = "Check the weather for any zip code.";
 CheckWeather.Parameters.Add(new FunctionInputParameter("zip_code", "Zip code of the area you want to check the weather for"));
@@ -186,7 +186,7 @@ rr.PreviousResponseID = "resp_0c5335a67e04df960069502ab72a108194bffc93b794cc1a97
 //Add the results of the "CheckWeather" tool 
 rr.Inputs.Add(new FunctionCallOutput("call_GYUF82w0DDdrV3Yf1YJo22OW", "{'temperature': 72.4, 'humidity': 55.4, 'precipitation_inches': 2.4}"));
 
-//Add the "CheckWeather" tool as a tool (function) the model has available to it
+//Add the "CheckWeather" custom function to the tools the model has available to it
 Function CheckWeather = new Function();
 CheckWeather.Name = "CheckWeather";
 CheckWeather.Description = "Check the weather for any zip code.";
