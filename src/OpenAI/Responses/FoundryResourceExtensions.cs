@@ -102,6 +102,21 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                     Message msg = Message.Parse(jo);
                     outputs.Add(msg);
                 }
+                else if (type.Value.ToString() == "web_search_call") //web search call: query OR open page
+                {
+                    JToken? ActionType = jo.SelectToken("action.type");
+                    if (ActionType != null)
+                    {
+                        if (ActionType.ToString() == "search") //web search, with a query
+                        {
+                            outputs.Add(WebSearchCallQuery.Parse(jo));
+                        }
+                        else if (ActionType.ToString() == "open_page")
+                        {
+                            outputs.Add(new WebSearchCallOpenPage()); //it does not specify which page was opened
+                        }
+                    }
+                }
             }
             ToReturn.Outputs = outputs.ToArray();
 
