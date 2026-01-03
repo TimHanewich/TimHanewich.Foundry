@@ -128,7 +128,7 @@ rr.Inputs.Add(new Message(Role.user, "What is the weather in 98004?")); //user m
 Tool CheckWeather = new Tool();
 CheckWeather.Name = "CheckWeather";
 CheckWeather.Description = "Check the weather for any zip code.";
-CheckWeather.Parameters.Add(new ToolInputParameter("zip_code", "Zip code of the area you want to check the weather for"));
+CheckWeather.Parameters.Add(new FunctionInputParameter("zip_code", "Zip code of the area you want to check the weather for"));
 rr.Tools.Add(CheckWeather);
 
 //Call to API service
@@ -144,7 +144,7 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
     {
         Console.WriteLine("Response: " + msg.Text);
     }
-    else if (exchange is ToolCall tc) //if it is a tool call
+    else if (exchange is FunctionCall tc) //if it is a tool call
     {
         Console.WriteLine();
         Console.WriteLine("Tool call received:");
@@ -184,13 +184,13 @@ rr.Model = "gpt-5-mini-testing"; //the name of your particular deployment in Fou
 rr.PreviousResponseID = "resp_0c5335a67e04df960069502ab72a108194bffc93b794cc1a97"; //previous response ID (the response that contained the tool call) - this provides conversational history!
 
 //Add the results of the "CheckWeather" tool 
-rr.Inputs.Add(new ToolCallOutput("call_GYUF82w0DDdrV3Yf1YJo22OW", "{'temperature': 72.4, 'humidity': 55.4, 'precipitation_inches': 2.4}"));
+rr.Inputs.Add(new FunctionCallOutput("call_GYUF82w0DDdrV3Yf1YJo22OW", "{'temperature': 72.4, 'humidity': 55.4, 'precipitation_inches': 2.4}"));
 
 //Add the "CheckWeather" tool as a tool (function) the model has available to it
 Tool CheckWeather = new Tool();
 CheckWeather.Name = "CheckWeather";
 CheckWeather.Description = "Check the weather for any zip code.";
-CheckWeather.Parameters.Add(new ToolInputParameter("zip_code", "Zip code of the area you want to check the weather for"));
+CheckWeather.Parameters.Add(new FunctionInputParameter("zip_code", "Zip code of the area you want to check the weather for"));
 rr.Tools.Add(CheckWeather);
 
 //Call to API service
@@ -206,7 +206,7 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
     {
         Console.WriteLine("Response: " + msg.Text);
     }
-    else if (exchange is ToolCall tc) //if it is a tool call
+    else if (exchange is FunctionCall tc) //if it is a tool call
     {
         Console.WriteLine();
         Console.WriteLine("Tool call received:");
@@ -217,7 +217,7 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
 }
 ```
 
-It is not shown above, but you can also specify if each parameter is required or not when declaring each parameter as a `ToolInputParameter`
+It is not shown above, but you can also specify if each parameter is required or not when declaring each parameter as a `FunctionInputParameter`
 
 This will result in:
 ```
