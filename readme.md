@@ -28,12 +28,12 @@ Below are some examples on how to use this library:
 ### Basic Prompting
 Below shows the basic set up and prompting process:
 ```
+using TimHanewich.Foundry;
 using TimHanewich.Foundry.OpenAI.Responses;
 
-//Define the deployment
-Deployment d = new Deployment();
-d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
-d.ApiKey = "Ax5hHeaVUqSipUxMkr...";
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
 
 //Create a response request (uses the Responses API)
 ResponseRequest rr = new ResponseRequest();
@@ -42,7 +42,7 @@ rr.Inputs.Add(new Message(Role.developer, "Talk like a cowboy.")); //system prom
 rr.Inputs.Add(new Message(Role.user, "Hi! Why is the sky blue?")); //user prompt
 
 //Call to API service
-Response r = await d.CreateResponseAsync(rr);
+Response r = await fr.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -70,12 +70,12 @@ Now, you might ask why it don’t look violet if violet scatters even more — w
 ### Follow-up Message
 To then continue the conversation with a follow up message, you must specify the `previous_response_id` property:
 ```
+using TimHanewich.Foundry;
 using TimHanewich.Foundry.OpenAI.Responses;
 
-//Define the deployment
-Deployment d = new Deployment();
-d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
-d.ApiKey = "Ax5hHeaVUqSipUxMkr...";
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
 
 //Create a response request (uses the Responses API)
 ResponseRequest rr = new ResponseRequest();
@@ -84,7 +84,7 @@ rr.PreviousResponseID = "resp_05c65468f65bdb3c006950294d66948196ac0afea12bfba22d
 rr.Inputs.Add(new Message(Role.user, "I'm still not getting it. Can you explain it to me like I am 5 years old?")); //user message
 
 //Call to API service
-Response r = await d.CreateResponseAsync(rr);
+Response r = await fr.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -112,12 +112,12 @@ When the sun is risin’ or settin’, its light has to travel through lots more
 ### Function Calling
 You can also achieve function-calling functionality (a.k.a. tool calling) like so:
 ```
+using TimHanewich.Foundry;
 using TimHanewich.Foundry.OpenAI.Responses;
 
-//Define the deployment
-Deployment d = new Deployment();
-d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
-d.ApiKey = "Ax5hHeaVUqSipUxMkr...";
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
 
 //Create a response request (uses the Responses API)
 ResponseRequest rr = new ResponseRequest();
@@ -132,7 +132,7 @@ CheckWeather.Parameters.Add(new ToolInputParameter("zip_code", "Zip code of the 
 rr.Tools.Add(CheckWeather);
 
 //Call to API service
-Response r = await d.CreateResponseAsync(rr);
+Response r = await fr.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -171,12 +171,12 @@ Arguments: {"zip_code":"98004"}
 After the model decides to make a tool call, you must provide it with the *result* of the tool call. After getting that result, you provide the result like so:
 
 ```
+using TimHanewich.Foundry;
 using TimHanewich.Foundry.OpenAI.Responses;
 
-//Define the deployment
-Deployment d = new Deployment();
-d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
-d.ApiKey = "Ax5hHeaVUqSipUxMkr...";
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
 
 //Create a response request (uses the Responses API)
 ResponseRequest rr = new ResponseRequest();
@@ -194,7 +194,7 @@ CheckWeather.Parameters.Add(new ToolInputParameter("zip_code", "Zip code of the 
 rr.Tools.Add(CheckWeather);
 
 //Call to API service
-Response r = await d.CreateResponseAsync(rr);
+Response r = await fr.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -236,12 +236,12 @@ If you’d like a forecast (hourly or 7-day), current conditions summary (wind, 
 ### Getting Structured Outputs ("JSON Mode")
 You can request a structured output, as JSON, like so:
 ```
+using TimHanewich.Foundry;
 using TimHanewich.Foundry.OpenAI.Responses;
 
-//Define the deployment
-Deployment d = new Deployment();
-d.Endpoint = "https://ai-testaistudio020597089470.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
-d.ApiKey = "Ax5hHeaVUqSipUxMkr...";
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
 
 //Create a response request (uses the Responses API)
 ResponseRequest rr = new ResponseRequest();
@@ -250,7 +250,7 @@ rr.Inputs.Add(new Message(Role.user, "Parse out the first and last name and prov
 rr.RequestedFormat = ResponseFormat.JsonObject; //specify you want a JSON object output ('JSON mode')
 
 //Call to API service
-Response r = await d.CreateResponseAsync(rr);
+Response r = await fr.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
@@ -298,6 +298,9 @@ Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToStr
 You can then provide that access token to use your model deployment like so:
 
 ```
+using TimHanewich.Foundry;
+using TimHanewich.Foundry.OpenAI.Responses;
+
 //Authenticate
 EntraAuthenticationHandler eah = new EntraAuthenticationHandler();
 eah.TenantID = "29506ab9-d072-41d6-aead-eeda9fe7e789";
@@ -309,11 +312,9 @@ TokenCredential credential = await eah.AuthenticateAsync();
 Console.WriteLine("Token credential expires at " + credential.Expires.ToString());         // "1/3/2026 9:31:12 AM"
 Console.WriteLine("Token credential is expired: " + credential.IsExpired().ToString());    // False
 
-
-//Define the deployment
-Deployment d = new Deployment();
-d.Endpoint = "https://my-foundry-resource.openai.azure.com/openai/responses?api-version=2025-04-01-preview";
-d.AccessToken = credential.AccessToken;
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
 
 //Create a response request (uses the Responses API)
 ResponseRequest rr = new ResponseRequest();
@@ -321,7 +322,7 @@ rr.Model = "gpt-5-mini"; //the name of your particular deployment in Foundry
 rr.Inputs.Add(new Message(Role.user, "Why is the sky blue?"));
 
 //Call to API service
-Response r = await d.CreateResponseAsync(rr);
+Response r = await fr.CreateResponseAsync(rr);
 
 //Print response info
 Console.WriteLine("Response ID: " + r.Id);
