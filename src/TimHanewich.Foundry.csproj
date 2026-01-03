@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <Title>TimHanewich.Foundry</Title>
     <Authors>TimHanewich</Authors>
     <Description>A lightweight .NET library for interfacing with LLM deployments in Microsoft Foundry (formerly Azure AI Foundry).</Description>
