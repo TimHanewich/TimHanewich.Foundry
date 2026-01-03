@@ -8,20 +8,20 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     {
         public string Name {get; set;}
         public string Description {get; set;}
-        public List<ToolInputParameter> Parameters {get; set;}
+        public List<FunctionInputParameter> Parameters {get; set;}
 
         public Function()
         {
             Name = "";
             Description = "";
-            Parameters = new List<ToolInputParameter>();
+            Parameters = new List<FunctionInputParameter>();
         }
 
         public Function(string name, string description)
         {
             Name = name;
             Description = description;
-            Parameters = new List<ToolInputParameter>();
+            Parameters = new List<FunctionInputParameter>();
         }
 
         public override JObject ToJSON()
@@ -45,7 +45,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             //properties
             JObject properties = new JObject();
             parameters.Add("properties", properties);
-            foreach (ToolInputParameter tip in Parameters)
+            foreach (FunctionInputParameter tip in Parameters)
             {
                 JObject InfoAboutThisTIP = new JObject();
                 properties.Add(tip.Name, InfoAboutThisTIP);
@@ -56,7 +56,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             //required
             JArray required = new JArray();
             parameters.Add("required", required);
-            foreach (ToolInputParameter tip in Parameters)
+            foreach (FunctionInputParameter tip in Parameters)
             {
                 if (tip.Required)
                 {
