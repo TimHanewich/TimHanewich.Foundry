@@ -275,6 +275,28 @@ Response: {"first": "Harold", "last": "Gargon"}
 
 Note, the OpenAI responses API also supports the `json_schema` format in which you can specify an exact schema it must conform to - but that is not supported in this library yet!
 
+## Using Web Search
+You can also use the built-in web search tool.
+```C#
+using TimHanewich.Foundry;
+using TimHanewich.Foundry.OpenAI.Responses;
+
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
+
+//Draft the response request
+ResponseRequest rr = new ResponseRequest();
+rr.Model = "gpt-5-mini";
+rr.Inputs.Add(new Message(Role.user, "What is the latest news on Lebron James?"));
+
+//Add the web search tool (built in tool)
+rr.Tools.Add(new WebSearchTool());
+
+Response r = fr.CreateResponseAsync(rr).Result;
+Console.WriteLine(JsonConvert.SerializeObject(r, Formatting.Indented));
+```
+
 ## Example Use: Entra ID Authentication
 In addition to supporting Foundry's **API-key** based authentication, this library also supports **keyless authentication** using Microsoft Entra ID. See [this article](https://timhanewich.medium.com/how-to-use-microsoft-foundry-via-entra-id-authentication-with-step-by-step-screenshots-f6d381d50f3a) for further information about this authentication type, its advantages, and how it works.
 
