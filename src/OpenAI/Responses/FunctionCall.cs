@@ -4,22 +4,22 @@ using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
-    public class ToolCall : Exchange
+    public class FunctionCall : Exchange
     {
         public string ToolName {get; set;}      //parameter "name"
         public JObject Arguments {get; set;}    //parameter "arguments"
-        public string CallId {get; set;}       //parameter "call_id"
+        public string CallId {get; set;}        //parameter "call_id"
 
-        public ToolCall()
+        public FunctionCall()
         {
             ToolName = "";
             Arguments = new JObject();
             CallId = "";
         }
 
-        public static ToolCall Parse(JObject tool_call)
+        public static FunctionCall Parse(JObject tool_call)
         {
-            ToolCall ToReturn = new ToolCall();
+            FunctionCall ToReturn = new FunctionCall();
 
             //Get tool name
             JProperty? name = tool_call.Property("name");
