@@ -6,28 +6,28 @@ using System.Net;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
-    public static class ProjectExtensions
+    public static class FoundryResourceExtensions
     {
-        public static async Task<Response> CreateResponseAsync(this Project proj, ResponseRequest request)
+        public static async Task<Response> CreateResponseAsync(this FoundryResource fr, ResponseRequest request)
         {
 
             //Prepare HTTP Request
             HttpRequestMessage req = new HttpRequestMessage();
             req.Method = HttpMethod.Post;
-            req.RequestUri = new Uri(proj.Endpoint);
+            req.RequestUri = new Uri(fr.Endpoint);
 
             //Plug in authentication
-            if (proj.ApiKey != null) //default to using the API key (i.e. if they provide both for some reason, use API key)
+            if (fr.ApiKey != null) //default to using the API key (i.e. if they provide both for some reason, use API key)
             {
-                req.Headers.Add("api-key", proj.ApiKey);
+                req.Headers.Add("api-key", fr.ApiKey);
             }
-            else if (proj.AccessToken != null)
+            else if (fr.AccessToken != null)
             {
-                req.Headers.Add("Authorization", "Bearer " + proj.AccessToken);
+                req.Headers.Add("Authorization", "Bearer " + fr.AccessToken);
             }
             else // If neither are provided
             {
-                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + proj.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
+                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + fr.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
             }    
 
             //Add body

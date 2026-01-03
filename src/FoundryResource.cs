@@ -9,27 +9,27 @@ using System.Net;
 
 namespace TimHanewich.Foundry
 {
-    public class Project //represents a Foundry project
+    public class FoundryResource //represents a Foundry Resource
     {
         public string Endpoint {get; set;}          //i.e. https://myfoundry.services.ai.azure.com
         public string? ApiKey {get; set;}           //API key directly provided by the Foundry portal
         public string? AccessToken {get; set;}      //Access token obtained using Entra ID Authentication (Service Principal-based)
 
-        public Project()
+        public FoundryResource()
         {
             Endpoint = "";
             ApiKey = null;
             AccessToken = null;
         }
 
-        public Project(string endpoint)
+        public FoundryResource(string endpoint)
         {
             Endpoint = endpoint;
             ApiKey = null;
             AccessToken = null;
         }
 
-        public Project(string endpoint, string? api_key = null, string? access_token = null)
+        public FoundryResource(string endpoint, string? api_key = null, string? access_token = null)
         {
             Endpoint = endpoint;
             ApiKey = api_key;
