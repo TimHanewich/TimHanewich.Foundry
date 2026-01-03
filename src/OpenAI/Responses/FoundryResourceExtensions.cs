@@ -117,6 +117,10 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                         }
                     }
                 }
+                else if (type.Value.ToString() == "code_interpreter_call") // code interpreter used
+                {
+                    outputs.Add(CodeInterpreterCall.Parse(jo));
+                }
             }
             ToReturn.Outputs = outputs.ToArray();
 
