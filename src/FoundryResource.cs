@@ -11,7 +11,7 @@ namespace TimHanewich.Foundry
 {
     public class FoundryResource //represents a Foundry Resource
     {
-        public string Endpoint {get; set;}          //i.e. https://myfoundry.services.ai.azure.com
+        public string Endpoint {get;}               //i.e. https://myfoundry.services.ai.azure.com
         public string? ApiKey {get; set;}           //API key directly provided by the Foundry portal
         public string? AccessToken {get; set;}      //Access token obtained using Entra ID Authentication (Service Principal-based)
 
