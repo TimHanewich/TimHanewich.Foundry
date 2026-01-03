@@ -148,7 +148,7 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
     {
         Console.WriteLine();
         Console.WriteLine("Tool call received:");
-        Console.WriteLine("Tool Name: " + tc.ToolName);
+        Console.WriteLine("Tool Name: " + tc.FunctionName);
         Console.WriteLine("Tool Call ID: " + tc.CallId);
         Console.WriteLine("Arguments: " + tc.Arguments.ToString(Formatting.None));
     }
@@ -210,7 +210,7 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
     {
         Console.WriteLine();
         Console.WriteLine("Tool call received:");
-        Console.WriteLine("Tool Name: " + tc.ToolName);
+        Console.WriteLine("Tool Name: " + tc.FunctionName);
         Console.WriteLine("Tool Call ID: " + tc.CallId);
         Console.WriteLine("Arguments: " + tc.Arguments.ToString(Formatting.None));
     }
