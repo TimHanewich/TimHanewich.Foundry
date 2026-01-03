@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
+    //This is used to provide back the RESULTS of a tool call the model made (as an input to a follow up request)
     public class FunctionCallOutput : Exchange
     {
         public string CallId {get; set;}
