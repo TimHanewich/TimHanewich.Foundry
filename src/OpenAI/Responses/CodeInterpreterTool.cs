@@ -8,6 +8,16 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     {
         public MemoryAmount? MemoryLimit {get; set;}
 
+        public CodeInterpreterTool()
+        {
+            
+        }
+
+        public CodeInterpreterTool(MemoryAmount mem_limit)
+        {
+            MemoryLimit = mem_limit;
+        }
+
         public override JObject ToJSON()
         {
             JObject ToReturn = new JObject();
