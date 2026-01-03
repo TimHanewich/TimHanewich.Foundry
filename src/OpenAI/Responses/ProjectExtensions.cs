@@ -6,9 +6,9 @@ using System.Net;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
-    public static class DeploymentExtensions
+    public static class ProjectExtensions
     {
-        public static async Task<Response> CreateResponseAsync(this Deployment d, ResponseRequest request)
+        public static async Task<Response> CreateResponseAsync(this Project d, ResponseRequest request)
         {
 
             //Prepare HTTP Request
@@ -27,7 +27,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             }
             else // If neither are provided
             {
-                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry deployment at '" + d.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
+                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + d.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
             }    
 
             //Add body
