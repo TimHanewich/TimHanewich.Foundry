@@ -15,13 +15,6 @@ namespace TimHanewich.Foundry
         public string? ApiKey {get; set;}           //API key directly provided by the Foundry portal
         public string? AccessToken {get; set;}      //Access token obtained using Entra ID Authentication (Service Principal-based)
 
-        public FoundryResource()
-        {
-            Endpoint = "";
-            ApiKey = null;
-            AccessToken = null;
-        }
-
         public FoundryResource(string endpoint)
         {
             Endpoint = StripUrlToBase(endpoint);
