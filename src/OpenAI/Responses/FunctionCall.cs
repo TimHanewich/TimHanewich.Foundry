@@ -17,27 +17,27 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             CallId = "";
         }
 
-        public static FunctionCall Parse(JObject tool_call)
+        public static FunctionCall Parse(JObject function_call)
         {
             FunctionCall ToReturn = new FunctionCall();
 
-            //Get tool name
-            JProperty? name = tool_call.Property("name");
+            //Get function name
+            JProperty? name = function_call.Property("name");
             if (name != null)
             {
                 ToReturn.FunctionName = name.Value.ToString();
             }
 
             //Get arguments
-            JProperty? arguments = tool_call.Property("arguments");
+            JProperty? arguments = function_call.Property("arguments");
             if (arguments != null)
             {
                 string arguments_json = arguments.Value.ToString();
                 ToReturn.Arguments = JObject.Parse(arguments_json);
             }
 
-            //get tool call ID
-            JProperty? id = tool_call.Property("call_id");
+            //get function call ID
+            JProperty? id = function_call.Property("call_id");
             if (id != null)
             {
                 ToReturn.CallId = id.Value.ToString();
