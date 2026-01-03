@@ -167,8 +167,8 @@ Tool Call ID: call_GYUF82w0DDdrV3Yf1YJo22OW
 Arguments: {"zip_code":"98004"}
 ```
 
-### Providing a Tool Call Output (Result)
-After the model decides to make a tool call, you must provide it with the *result* of the tool call. After getting that result, you provide the result like so:
+### Providing a Function Call Output (Result)
+After the model decides to make a function call, you must provide it with the *result* of the function call. After getting that result, you provide the result like so:
 
 ```
 using TimHanewich.Foundry;
@@ -187,7 +187,7 @@ rr.PreviousResponseID = "resp_0c5335a67e04df960069502ab72a108194bffc93b794cc1a97
 rr.Inputs.Add(new FunctionCallOutput("call_GYUF82w0DDdrV3Yf1YJo22OW", "{'temperature': 72.4, 'humidity': 55.4, 'precipitation_inches': 2.4}"));
 
 //Add the "CheckWeather" tool as a tool (function) the model has available to it
-Tool CheckWeather = new Tool();
+Function CheckWeather = new Function();
 CheckWeather.Name = "CheckWeather";
 CheckWeather.Description = "Check the weather for any zip code.";
 CheckWeather.Parameters.Add(new FunctionInputParameter("zip_code", "Zip code of the area you want to check the weather for"));
@@ -206,13 +206,13 @@ foreach (Exchange exchange in r.Outputs) //loop through all outputs (output coul
     {
         Console.WriteLine("Response: " + msg.Text);
     }
-    else if (exchange is FunctionCall tc) //if it is a tool call
+    else if (exchange is FunctionCall fc) //if it is a function call
     {
         Console.WriteLine();
         Console.WriteLine("Tool call received:");
-        Console.WriteLine("Tool Name: " + tc.FunctionName);
-        Console.WriteLine("Tool Call ID: " + tc.CallId);
-        Console.WriteLine("Arguments: " + tc.Arguments.ToString(Formatting.None));
+        Console.WriteLine("Tool Name: " + fc.FunctionName);
+        Console.WriteLine("Tool Call ID: " + fc.CallId);
+        Console.WriteLine("Arguments: " + fc.Arguments.ToString(Formatting.None));
     }
 }
 ```
