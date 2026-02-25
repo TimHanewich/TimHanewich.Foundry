@@ -4,7 +4,7 @@ namespace TimHanewich.Foundry
 {
     public class TokenCredential
     {
-        public DateTime Expires {get; set;}
+        public DateTimeOffset Expires {get; set;}
         public string AccessToken {get; set;}
 
         public TokenCredential()
@@ -14,7 +14,7 @@ namespace TimHanewich.Foundry
 
         public TokenCredential(int expires_in, string access_token)
         {
-            Expires = DateTime.Now.AddSeconds(expires_in);
+            Expires = DateTimeOffset.UtcNow.AddSeconds(expires_in);
             AccessToken = access_token;
         }
 
