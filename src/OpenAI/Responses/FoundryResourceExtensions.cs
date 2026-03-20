@@ -8,19 +8,10 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public static class FoundryResourceExtensions
     {
-        public static async Task<Response> CreateResponseAsync(this FoundryResource fr, ResponseRequest request)
+        private static HttpRequestMessage PrepareRequestMessage(this FoundryResource fr)
         {
-
-            //Prepare URL endpoint we will call to
-            UriBuilder builder = new UriBuilder(fr.Endpoint);
-            builder.Path = "/openai/responses";
-            builder.Query = "api-version=2025-04-01-preview";
-            string endpoint = builder.Uri.ToString();
-
             //Prepare HTTP Request
             HttpRequestMessage req = new HttpRequestMessage();
-            req.Method = HttpMethod.Post;
-            req.RequestUri = new Uri(endpoint);
 
             //Plug in authentication
             if (fr.ApiKey != null) //default to using the API key (i.e. if they provide both for some reason, use API key)
@@ -34,34 +25,25 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             else // If neither are provided
             {
                 throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + fr.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
-            }    
-
-            //Add body
-            req.Content = new StringContent(request.ToJSON().ToString(), Encoding.UTF8, "application/json");
-
-            //Make API call
-            HttpClient hc = new HttpClient();
-            hc.Timeout = new TimeSpan(24, 0, 0);
-            HttpResponseMessage resp = await hc.SendAsync(req, HttpCompletionOption.ResponseHeadersRead);
-            string content = await resp.Content.ReadAsStringAsync();
-            if (resp.StatusCode != HttpStatusCode.OK)
-            {
-                throw new Exception("Call to model failed with code '" + resp.StatusCode.ToString() + "'. Msg: " + content);
             }
-            JObject contentjo = JObject.Parse(content);
 
+            return req;
+        }
+
+        private static Response ParseResponseFromPayload(JObject payload)
+        {
             //To return
             Response ToReturn = new Response();
 
             //Get the response id
-            JProperty? prop_id = contentjo.Property("id");
+            JProperty? prop_id = payload.Property("id");
             if (prop_id != null)
             {
                 ToReturn.Id = prop_id.Value.ToString();
             }
 
             //Get the status
-            JProperty? prop_status = contentjo.Property("status");
+            JProperty? prop_status = payload.Property("status");
             if (prop_status != null)
             {
                 string status = prop_status.Value.ToString();
@@ -92,14 +74,14 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             }
 
             //Get input tokens
-            JToken? input_tokens = contentjo.SelectToken("usage.input_tokens");
+            JToken? input_tokens = payload.SelectToken("usage.input_tokens");
             if (input_tokens != null)
             {
                 ToReturn.InputTokensConsumed = Convert.ToInt32(input_tokens.ToString());
             }
 
             //Get output tokens
-            JToken? output_tokens = contentjo.SelectToken("usage.output_tokens");
+            JToken? output_tokens = payload.SelectToken("usage.output_tokens");
             if (output_tokens != null)
             {
                 ToReturn.OutputTokensConsumed = Convert.ToInt32(output_tokens.ToString());
@@ -107,10 +89,10 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 
             //Get outputs
             List<Exchange> outputs = new List<Exchange>();
-            JToken? output_selection = contentjo.SelectToken("output");
+            JToken? output_selection = payload.SelectToken("output");
             if (output_selection == null)
             {
-                throw new Exception("Property 'message' not in model's response. Full content of response: " + contentjo.ToString());
+                throw new Exception("Property 'message' not in model's response. Full content of response: " + payload.ToString());
             }
             JArray outputs_ja = (JArray)output_selection;
             foreach (JObject jo in outputs_ja)
@@ -156,7 +138,71 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             ToReturn.Outputs = outputs.ToArray();
 
             return ToReturn;
+        }
 
+        //Creates a new response by submitted a new response request
+        public static async Task<Response> CreateResponseAsync(this FoundryResource fr, ResponseRequest request)
+        {
+            //Prepare URL endpoint we will call to
+            UriBuilder builder = new UriBuilder(fr.Endpoint);
+            builder.Path = "/openai/responses";
+            builder.Query = "api-version=2025-04-01-preview";
+            string endpoint = builder.Uri.ToString();
+
+            //Prepare HTTP Request
+            HttpRequestMessage req = fr.PrepareRequestMessage();
+            req.Method = HttpMethod.Post;
+            req.RequestUri = new Uri(endpoint);
+
+            //Add body
+            req.Content = new StringContent(request.ToJSON().ToString(), Encoding.UTF8, "application/json");
+
+            //Make API call
+            HttpClient hc = new HttpClient();
+            hc.Timeout = new TimeSpan(24, 0, 0);
+            HttpResponseMessage resp = await hc.SendAsync(req, HttpCompletionOption.ResponseHeadersRead);
+            string content = await resp.Content.ReadAsStringAsync();
+            if (resp.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception("Call to model failed with code '" + resp.StatusCode.ToString() + "'. Msg: " + content);
+            }
+            JObject payload = JObject.Parse(content);
+
+            //Parse
+            Response ToReturn = ParseResponseFromPayload(payload);
+
+            return ToReturn;
+        }
+    
+        //Retrieves an existing response by ID
+        public static async Task<Response> RetrieveResponseAsync(this FoundryResource fr, string id)
+        {
+            //Prepare URL endpoint we will call to
+            UriBuilder builder = new UriBuilder(fr.Endpoint);
+            builder.Path = "/openai/responses/" + id;
+            builder.Query = "api-version=2025-04-01-preview";
+            string endpoint = builder.Uri.ToString();
+
+            //Prepare HTTP Request
+            HttpRequestMessage req = fr.PrepareRequestMessage();
+            req.Method = HttpMethod.Get;
+            req.RequestUri = new Uri(endpoint);
+
+            //Make API call
+            HttpClient hc = new HttpClient();
+            hc.Timeout = new TimeSpan(24, 0, 0);
+            HttpResponseMessage resp = await hc.SendAsync(req, HttpCompletionOption.ResponseHeadersRead);
+            string content = await resp.Content.ReadAsStringAsync();
+            if (resp.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception("Call to model failed with code '" + resp.StatusCode.ToString() + "'. Msg: " + content);
+            }
+            JObject payload = JObject.Parse(content);
+
+            //Parse
+            Response ToReturn = ParseResponseFromPayload(payload);
+
+            return ToReturn;
         }
     }
 }
