@@ -42,7 +42,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             //Make API call
             HttpClient hc = new HttpClient();
             hc.Timeout = new TimeSpan(24, 0, 0);
-            HttpResponseMessage resp = await hc.SendAsync(req);
+            HttpResponseMessage resp = await hc.SendAsync(req, HttpCompletionOption.ResponseHeadersRead);
             string content = await resp.Content.ReadAsStringAsync();
             if (resp.StatusCode != HttpStatusCode.OK)
             {
