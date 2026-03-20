@@ -6,6 +6,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class Response
     {
         public string Id {get; set;} // id of the response
+        public ResponseStatus Status {get; set;}
         public Exchange[] Outputs {get; set;}
         public int InputTokensConsumed {get; set;}
         public int OutputTokensConsumed {get; set;}
