@@ -60,6 +60,37 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 ToReturn.Id = prop_id.Value.ToString();
             }
 
+            //Get the status
+            JProperty? prop_status = contentjo.Property("status");
+            if (prop_status != null)
+            {
+                string status = prop_status.Value.ToString();
+                if (status == "queued")
+                {
+                    ToReturn.Status = ResponseStatus.Queued;
+                }
+                else if (status == "in_progress")
+                {
+                    ToReturn.Status = ResponseStatus.InProgress;
+                }
+                else if (status == "completed")
+                {
+                    ToReturn.Status = ResponseStatus.Completed;
+                }
+                else if (status == "failed")
+                {
+                    ToReturn.Status = ResponseStatus.Failed;
+                }
+                else if (status == "cancelled")
+                {
+                    ToReturn.Status = ResponseStatus.Cancelled;
+                }
+                else
+                {
+                    ToReturn.Status = ResponseStatus.Unknown;
+                }
+            }
+
             //Get input tokens
             JToken? input_tokens = contentjo.SelectToken("usage.input_tokens");
             if (input_tokens != null)
