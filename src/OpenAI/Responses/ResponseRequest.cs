@@ -12,6 +12,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public List<Tool> Tools {get; set;}
         public ReasoningEffortLevel? ReasoningEffort {get; set;}
         public ResponseFormat RequestedFormat {get; set;}
+        public bool Background {get; set;} //If it is a "background" (asynchronous) request where you submit it, it returns "got it" and you later call again to check on it.
 
         public ResponseRequest()
         {
@@ -21,6 +22,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Inputs = new List<Exchange>(); //for messages, tool call responses, etc.
             ReasoningEffort = null;
             RequestedFormat = ResponseFormat.Text; //default to text
+            Background = false;
         }
 
         //Prepares a responses request as a JSON object that can be sent to a Foundry OpenAI LLM service
@@ -91,6 +93,9 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 format.Add("format", type);
                 ToReturn.Add("text", format);
             }
+
+            //Background
+            ToReturn.Add("background", Background);
 
             return ToReturn;
         }
