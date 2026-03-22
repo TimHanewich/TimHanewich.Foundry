@@ -86,22 +86,13 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                     JArray cfs = (JArray)prop_content_filters.Value;
                     foreach (JObject jo in cfs)
                     {
-                        JProperty? prop_source_type = jo.Property("source_type");
                         JProperty? prop_blocked = jo.Property("blocked");
-                        if (prop_source_type != null && prop_blocked != null)
+                        if (prop_blocked != null)
                         {
                             try //place in try bracket just in case that "blocked" value does not convert to boolean.
                             {
-                                string source_type = prop_source_type.Value.ToString();
                                 bool blocked = Convert.ToBoolean(prop_blocked.Value.ToString());
-                                if (source_type == "prompt")
-                                {
-                                    ToReturn.PromptBlocked = blocked;
-                                }
-                                else if (source_type == "completion")
-                                {
-                                    ToReturn.CompletionBlocked = blocked;
-                                }
+                                ToReturn.Blocked = blocked;
                             }
                             catch
                             {

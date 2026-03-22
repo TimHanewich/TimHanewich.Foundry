@@ -7,8 +7,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     {
         public string Id {get; set;} // id of the response
         public ResponseStatus Status {get; set;}
-        public bool PromptBlocked {get; set;}
-        public bool CompletionBlocked {get; set;}
+        public bool Blocked {get; set;} //blocked for any reason (i.e. prompt or completion)
         public Exchange[] Outputs {get; set;}
         public int InputTokensConsumed {get; set;}
         public int OutputTokensConsumed {get; set;}
@@ -17,8 +16,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         {
             Id = string.Empty;
             Outputs = new Exchange[]{};
-            PromptBlocked = false;
-            CompletionBlocked = false;
+            Blocked = false;
         }
     }
 }
