@@ -9,3 +9,4 @@
 |0.4.2|`9593852bbd8424d130f9c45bf8ca3d6876cfb570`|`HttpCompletionOption.ResponseHeadersRead` added to calls to Foundry (supports long-living requests)|
 |0.5.0|`c55f7478c1555299b6939d2e1ed5b4cd5083097c`|Added ability to use `background` parameter of responses and later retrieve them (run asynchronously)|
 |0.6.0|`27a8deaddcd5f57b30b837f5357afc5841731394`|Added `incomplete` status to `ResponseStatus` and added *blocked* properties to Response|
+|0.6.1|`991485e54d0eae02899ca615fa4b8141987fbf5c`|Fixed JArray conversion in last release that checked for blocked prompts/completions|
