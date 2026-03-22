@@ -77,6 +77,31 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 }
             }
 
+            //Get the blocked status
+            JProperty? prop_content_filters = payload.Property("content_filters");
+            if (prop_content_filters != null)
+            {
+                JArray cfs = (JArray)prop_content_filters.Value;
+                foreach (JObject jo in cfs)
+                {
+                    JProperty? prop_source_type = jo.Property("source_type");
+                    JProperty? prop_blocked = jo.Property("blocked");
+                    if (prop_source_type != null && prop_blocked != null)
+                    {
+                        string source_type = prop_source_type.Value.ToString();
+                        bool blocked = Convert.ToBoolean(prop_blocked.Value.ToString());
+                        if (source_type == "prompt")
+                        {
+                            ToReturn.PromptBlocked = blocked;
+                        }
+                        else if (source_type == "completion")
+                        {
+                            ToReturn.CompletionBlocked = blocked;
+                        }
+                    }
+                }
+            }
+
             //Get input tokens
             JToken? input_tokens = payload.SelectToken("usage.input_tokens");
             if (input_tokens != null)
