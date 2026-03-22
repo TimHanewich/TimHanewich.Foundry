@@ -8,3 +8,4 @@
 |0.4.1|`fd0008e617379b551d945ef1debaadd8cb56afe7`|`Expires` property of `TokenCredential` is now a `DateTimeOffset`, not just a `DateTime`|
 |0.4.2|`9593852bbd8424d130f9c45bf8ca3d6876cfb570`|`HttpCompletionOption.ResponseHeadersRead` added to calls to Foundry (supports long-living requests)|
 |0.5.0|`c55f7478c1555299b6939d2e1ed5b4cd5083097c`|Added ability to use `background` parameter of responses and later retrieve them (run asynchronously)|
+|0.6.0|`27a8deaddcd5f57b30b837f5357afc5841731394`|Added `incomplete` status to `ResponseStatus` and added *blocked* properties to Response|
