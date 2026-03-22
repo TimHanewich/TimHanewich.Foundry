@@ -11,7 +11,7 @@ namespace testing
         public static void Main(string[] args)
         {
             FoundryResource fr = new FoundryResource("https://timh-Scout.services.ai.azure.com");
-            fr.ApiKey = "EUg3bBFTpXMocSBTGZAJCVV63h2oj9EvD2lg6z0eiEb35nbWAv6tJQQJ99CCAC4f1cMXJ3w3AAAAACOGzFAI";
+            fr.ApiKey = "<api key here>";
 
             //ResponseRequest rr = new ResponseRequest();
             //rr.Model = "gpt-5-chat";
