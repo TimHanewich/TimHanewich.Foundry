@@ -81,7 +81,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             JProperty? prop_content_filters = payload.Property("content_filters");
             if (prop_content_filters != null)
             {
-                if (prop_content_filters.Type == JTokenType.Array)
+                if (prop_content_filters.Value.Type == JTokenType.Array)
                 {
                     JArray cfs = (JArray)prop_content_filters.Value;
                     foreach (JObject jo in cfs)
@@ -92,11 +92,14 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                             try //place in try bracket just in case that "blocked" value does not convert to boolean.
                             {
                                 bool blocked = Convert.ToBoolean(prop_blocked.Value.ToString());
-                                ToReturn.Blocked = blocked;
+                                if (ToReturn.Blocked == false && blocked == true)
+                                {
+                                    ToReturn.Blocked = blocked;
+                                }
                             }
                             catch
                             {
-                                
+                                Console.WriteLine("That failed");
                             }
                         }
                     }
