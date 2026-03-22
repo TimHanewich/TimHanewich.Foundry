@@ -67,6 +67,10 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 {
                     ToReturn.Status = ResponseStatus.Cancelled;
                 }
+                else if (status == "incomplete")
+                {
+                    ToReturn.Status = ResponseStatus.Incomplete;
+                }
                 else
                 {
                     ToReturn.Status = ResponseStatus.Unknown;
