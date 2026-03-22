@@ -6,6 +6,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class Response
     {
         public string Id {get; set;} // id of the response
+        public DateTimeOffset CreatedAt {get; set;}
         public ResponseStatus Status {get; set;}
         public bool Blocked {get; set;} //blocked for any reason (i.e. prompt or completion)
         public Exchange[] Outputs {get; set;}

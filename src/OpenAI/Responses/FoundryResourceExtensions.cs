@@ -42,6 +42,17 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 ToReturn.Id = prop_id.Value.ToString();
             }
 
+            //Get created_at (UNIX timestamp)
+            JProperty? prop_created_at = payload.Property("created_at");
+            if (prop_created_at != null)
+            {
+                if (prop_created_at.Value.Type == JTokenType.Integer)
+                {
+                    int created_at = Convert.ToInt32(prop_created_at.Value.ToString());
+                    ToReturn.CreatedAt = DateTimeOffset.FromUnixTimeSeconds(created_at);
+                }
+            }
+
             //Get the status
             JProperty? prop_status = payload.Property("status");
             if (prop_status != null)
