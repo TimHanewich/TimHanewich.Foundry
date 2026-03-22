@@ -88,15 +88,22 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                     JProperty? prop_blocked = jo.Property("blocked");
                     if (prop_source_type != null && prop_blocked != null)
                     {
-                        string source_type = prop_source_type.Value.ToString();
-                        bool blocked = Convert.ToBoolean(prop_blocked.Value.ToString());
-                        if (source_type == "prompt")
+                        try //place in try bracket just in case that "blocked" value does not convert to boolean.
                         {
-                            ToReturn.PromptBlocked = blocked;
+                            string source_type = prop_source_type.Value.ToString();
+                            bool blocked = Convert.ToBoolean(prop_blocked.Value.ToString());
+                            if (source_type == "prompt")
+                            {
+                                ToReturn.PromptBlocked = blocked;
+                            }
+                            else if (source_type == "completion")
+                            {
+                                ToReturn.CompletionBlocked = blocked;
+                            }
                         }
-                        else if (source_type == "completion")
+                        catch
                         {
-                            ToReturn.CompletionBlocked = blocked;
+                            
                         }
                     }
                 }
