@@ -11,3 +11,4 @@
 |0.6.0|`27a8deaddcd5f57b30b837f5357afc5841731394`|Added `incomplete` status to `ResponseStatus` and added *blocked* properties to Response|
 |0.6.1|`991485e54d0eae02899ca615fa4b8141987fbf5c`|Fixed JArray conversion in last release that checked for blocked prompts/completions|
 |0.7.0|`f34f595c5a3b4ef6dc8c0cfc2569e9d86d03784f`|Fixed block detection logic and consolidated to only one "blocked" property on the Response|
+|0.8.0|`0f775d21d77c64973da7392a2b177a7b82904d6d`|Added `CreatedAt` to Response|
