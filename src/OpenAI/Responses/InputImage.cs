@@ -36,5 +36,12 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             ToReturn.URL = full_url;
             return ToReturn;
         }
+
+        public static InputImage FromURL(string url)
+        {
+            InputImage ToReturn = new InputImage();
+            ToReturn.URL = url;
+            return ToReturn;
+        }
     }
 }
