@@ -131,6 +131,13 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 ToReturn.OutputTokensConsumed = Convert.ToInt32(output_tokens.ToString());
             }
 
+            //Get model
+            JProperty? prop_model = payload.Property("model");
+            if (prop_model != null)
+            {
+                ToReturn.Model = prop_model.Value.ToString();
+            }
+
             //Get outputs
             List<Exchange> outputs = new List<Exchange>();
             JToken? output_selection = payload.SelectToken("output");

@@ -8,6 +8,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public string Id {get; set;} // id of the response
         public DateTimeOffset CreatedAt {get; set;}
         public ResponseStatus Status {get; set;}
+        public string Model {get; set;} //What model fulfilled it
         public bool Blocked {get; set;} //blocked for any reason (i.e. prompt or completion)
         public Exchange[] Outputs {get; set;}
         public int InputTokensConsumed {get; set;}
@@ -18,6 +19,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             Id = string.Empty;
             Outputs = new Exchange[]{};
             Blocked = false;
+            Model = string.Empty;
         }
     }
 }
