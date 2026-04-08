@@ -11,6 +11,9 @@
 - 🧵 **Smart Context**: Simple conversation tracking using the responses API's `previous_response_id`.
 - 🛠️ **Native Tooling**: Strongly-typed classes for Function Calling and tool result handling.
 - 📦 **Structured Data**: Built-in support for JSON Mode for structured model outputs.
+- 🖼️ **Vision**: Send images (local files or URLs) alongside text prompts via `InputImage`.
+- ⏳ **Background Responses**: Submit long-running requests asynchronously and retrieve results later.
+- 🧠 **Reasoning Effort**: Control reasoning intensity for reasoning-capable models.
 - 🚀 **Modern .NET**: Built from the ground up to support the latest .NET 10+ features.
 
 ### Why use this over the standard OpenAI SDK?
@@ -317,6 +320,108 @@ rr.Tools.Add(new CodeInterpreterTool(CodeInterpreterTool.MemoryAmount.gb4));
 
 Response r = fr.CreateResponseAsync(rr).Result;
 Console.WriteLine(JsonConvert.SerializeObject(r, Formatting.Indented));
+```
+
+## Sending Images (Vision)
+You can send images alongside text prompts using the `InputImage` class. This works with vision-capable models.
+
+### Image from a URL
+```C#
+using TimHanewich.Foundry;
+using TimHanewich.Foundry.OpenAI.Responses;
+
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
+
+//Draft the response request
+ResponseRequest rr = new ResponseRequest();
+rr.Model = "gpt-5-mini";
+
+//Create a message with an image from a URL
+Message msg = new Message(Role.user, "What do you see in this image?");
+msg.Images.Add(InputImage.FromURL("https://example.com/photo.jpg"));
+rr.Inputs.Add(msg);
+
+Response r = await fr.CreateResponseAsync(rr);
+foreach (Exchange exchange in r.Outputs)
+{
+    if (exchange is Message rmsg)
+    {
+        Console.WriteLine("Response: " + rmsg.Text);
+    }
+}
+```
+
+### Image from a Local File
+You can also load images directly from a local file path. The library will automatically base64-encode the file and embed it in the request. Supported formats: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`.
+```C#
+Message msg = new Message(Role.user, "Describe this photo in detail.");
+msg.Images.Add(InputImage.FromFile(@"C:\Photos\landscape.png"));
+rr.Inputs.Add(msg);
+```
+
+### Controlling Image Detail Level
+You can control the fidelity at which the model processes the image using `InputImageDetail`:
+```C#
+InputImage img = InputImage.FromURL("https://example.com/photo.jpg");
+img.Detail = InputImageDetail.High; // Low, High, Original, or Auto (default)
+msg.Images.Add(img);
+```
+
+## Background (Async) Responses
+For long-running requests, you can submit them in the background and retrieve results later:
+```C#
+using TimHanewich.Foundry;
+using TimHanewich.Foundry.OpenAI.Responses;
+
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
+
+//Draft a background response request
+ResponseRequest rr = new ResponseRequest();
+rr.Model = "gpt-5-mini";
+rr.Inputs.Add(new Message(Role.user, "Write a very long and detailed essay about the history of aviation."));
+rr.Background = true; //submit as a background (async) request
+
+//Submit - this returns immediately with a response ID and status (e.g. Queued or InProgress)
+Response r = await fr.CreateResponseAsync(rr);
+Console.WriteLine("Response ID: " + r.Id);
+Console.WriteLine("Status: " + r.Status); // Queued, InProgress, etc.
+
+//Later, retrieve the completed response by ID
+Response completed = await fr.RetrieveResponseAsync(r.Id);
+Console.WriteLine("Status: " + completed.Status); // Completed
+foreach (Exchange exchange in completed.Outputs)
+{
+    if (exchange is Message msg)
+    {
+        Console.WriteLine("Response: " + msg.Text);
+    }
+}
+```
+
+The `Response.Status` property can be: `Queued`, `InProgress`, `Completed`, `Failed`, `Cancelled`, or `Incomplete`.
+
+## Setting Reasoning Effort
+For reasoning-capable models, you can control how much effort the model puts into reasoning:
+```C#
+ResponseRequest rr = new ResponseRequest();
+rr.Model = "o4-mini";
+rr.Inputs.Add(new Message(Role.user, "Solve this step by step: what is 2^127 - 1?"));
+rr.ReasoningEffort = ReasoningEffortLevel.High; // Low, Medium, or High
+```
+
+## Additional Response Properties
+The `Response` object includes several useful properties beyond text output:
+```C#
+Response r = await fr.CreateResponseAsync(rr);
+
+Console.WriteLine("Model: " + r.Model);                // Which model fulfilled the request
+Console.WriteLine("Created: " + r.CreatedAt.ToString()); // When the response was created
+Console.WriteLine("Blocked: " + r.Blocked.ToString());   // True if content filters blocked the request
+Console.WriteLine("Status: " + r.Status.ToString());     // Completed, Failed, Incomplete, etc.
 ```
 
 ## Example Use: Entra ID Authentication
