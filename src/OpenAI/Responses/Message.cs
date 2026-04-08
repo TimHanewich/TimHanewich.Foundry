@@ -8,18 +8,18 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     {
         public Role Role {get; set;}
         public string? Text {get; set;}
-        public List<InputImage> InputImages {get; set;}
+        public List<InputImage> Images {get; set;}
 
         public Message()
         {
-            InputImages = new List<InputImage>();
+            Images = new List<InputImage>();
         }
 
         public Message(Role role, string text)
         {
             Role = role;
             Text = text;
-            InputImages = new List<InputImage>();
+            Images = new List<InputImage>();
         }
 
         public override JObject ToJSON()
@@ -53,7 +53,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             }
 
             //Images
-            foreach (InputImage ii in InputImages)
+            foreach (InputImage ii in Images)
             {
                 content.Add(ii.ToJSON());
             }
