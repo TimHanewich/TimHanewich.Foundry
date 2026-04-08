@@ -6,10 +6,12 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class InputImage
     {
         public string URL {get; set;}
+        public InputImageDetail Detail {get; set;}
 
         public InputImage()
         {
             URL = "";
+            Detail = InputImageDetail.Auto;
         }
 
         public static InputImage FromFile(string path)
@@ -50,6 +52,25 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             JObject ToReturn = new JObject();
             ToReturn.Add("type", "input_image");
             ToReturn.Add("image_url", URL);
+
+            //Detail
+            if (Detail == InputImageDetail.Low)
+            {
+                ToReturn.Add("detail", "low");
+            }
+            else if (Detail == InputImageDetail.High)
+            {
+                ToReturn.Add("detail", "high");
+            }
+            else if (Detail == InputImageDetail.Original)
+            {
+                ToReturn.Add("detail", "original");
+            }
+            else if (Detail == InputImageDetail.Auto)
+            {
+                ToReturn.Add("detail", "auto");
+            }
+
             return ToReturn;
         }
     }
