@@ -47,8 +47,20 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             if (Text != null)
             {
                 JObject text = new JObject();
-                text.Add("type", "input_text");
+
+                //Add the text
                 text.Add("text", Text);
+
+                //Add the type based on who it came from
+                if (Role == Role.assistant) //This is where we are TELLING the AI what it said (or what we want it to think it said) (uncommon)
+                {
+                    text.Add("type", "output_text"); //So we classify it as output_text
+                }
+                else //for all other messages (normal)
+                {
+                    text.Add("type", "input_text");
+                }
+                
                 content.Add(text);
             }
 
