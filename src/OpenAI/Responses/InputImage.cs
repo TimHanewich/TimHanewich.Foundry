@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
@@ -41,6 +42,14 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         {
             InputImage ToReturn = new InputImage();
             ToReturn.URL = url;
+            return ToReturn;
+        }
+    
+        public JObject ToJSON()
+        {
+            JObject ToReturn = new JObject();
+            ToReturn.Add("type", "input_image");
+            ToReturn.Add("image_url", URL);
             return ToReturn;
         }
     }

@@ -8,16 +8,18 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     {
         public Role Role {get; set;}
         public string? Text {get; set;}
+        public List<InputImage> InputImages {get; set;}
 
         public Message()
         {
-            
+            InputImages = new List<InputImage>();
         }
 
         public Message(Role role, string text)
         {
             Role = role;
             Text = text;
+            InputImages = new List<InputImage>();
         }
 
         public override JObject ToJSON()
@@ -38,11 +40,26 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 ToReturn.Add("role", "assistant");    
             }
 
-            //Text
+            //Encode "content"
+            JArray content = new JArray();
+
+            //Text?
             if (Text != null)
             {
-                ToReturn.Add("content", Text);
+                JObject text = new JObject();
+                text.Add("type", "input_text");
+                text.Add("text", Text);
+                content.Add(text);
             }
+
+            //Images
+            foreach (InputImage ii in InputImages)
+            {
+                content.Add(ii.ToJSON());
+            }
+
+            //Add content
+            ToReturn.Add("content", content);
 
             return ToReturn;
         }
