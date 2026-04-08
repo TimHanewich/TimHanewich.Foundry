@@ -13,3 +13,4 @@
 |0.7.0|`f34f595c5a3b4ef6dc8c0cfc2569e9d86d03784f`|Fixed block detection logic and consolidated to only one "blocked" property on the Response|
 |0.8.0|`0f775d21d77c64973da7392a2b177a7b82904d6d`|Added `CreatedAt` to Response|
 |0.9.0|`e7b285ee08752732369708910eb7fdcb2dad7f83`|Added ability to include images via `InputImage` and recorded `model` property in response|
+|0.10.0|`f585b61d85506573fc88a90a96ff81f93d854760`|Added `InputImageDetail` property to `InputImage`|
