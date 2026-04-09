@@ -4,8 +4,11 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public enum ReasoningEffortLevel
     {
-        Low = 0,
-        Medium = 1,
-        High = 2
+        None = 0,
+        Minimal = 1,
+        Low = 2,
+        Medium = 3,
+        High = 4,
+        XHigh = 5
     }
 }
