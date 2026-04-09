@@ -13,6 +13,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public ReasoningEffortLevel? ReasoningEffort {get; set;}
         public ResponseFormat RequestedFormat {get; set;}
         public StructuredOutputSchema? OutputSchema {get; set;} //if they selected StructuredOutput as ResponseFormat, the schema they supply (can get it from https://transform.tools/json-to-json-schema)
+        public Verbosity? VerbosityLevel {get; set;}    //Verbosity level (optional)
         public bool Background {get; set;} //If it is a "background" (asynchronous) request where you submit it, it returns "got it" and you later call again to check on it.
 
         public ResponseRequest()
@@ -116,6 +117,28 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 JObject jo_text = new JObject();
                 jo_text.Add("format", OutputSchema.ToJSON());
                 ToReturn.Add("text", jo_text);
+            }
+
+            //Verbosity level
+            if (VerbosityLevel != null)
+            {
+                string? AsTxt = VerbosityLevel.ToString();
+                if (AsTxt != null)
+                {
+                    AsTxt = AsTxt.ToLower();
+                    JProperty? prop_text = ToReturn.Property("text"); //has text been added yet
+                    if (prop_text != null)
+                    {
+                        JObject text = (JObject)prop_text.Value;
+                        text.Add("verbosity", AsTxt);
+                    }
+                    else
+                    {
+                        JObject text = new JObject();
+                        text.Add("verbosity", AsTxt);
+                        ToReturn.Add("text", text);
+                    }
+                }
             }
 
             //Background
