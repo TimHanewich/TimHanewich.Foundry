@@ -29,17 +29,6 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             //strict
             ToReturn.Add("strict", true);
 
-            //Ensure schema has "additionalProperties" and it is set to false (prob doesnt have it)
-            JProperty? prop_additionalProperties = Schema.Property("additionalProperties");
-            if (prop_additionalProperties == null)
-            {
-                Schema.Add("additionalProperties", false);
-            }
-            else
-            {
-                Schema["additionalProperties"] = false;
-            }
-
             //schema
             ToReturn.Add("schema", Schema);
 
