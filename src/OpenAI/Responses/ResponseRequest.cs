@@ -66,7 +66,15 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             if (ReasoningEffort != null)
             {
                 JObject effort = new JObject();
-                if (ReasoningEffort == ReasoningEffortLevel.Low)
+                if (ReasoningEffort == ReasoningEffortLevel.None)
+                {
+                    effort.Add("effort", "none");
+                }
+                else if (ReasoningEffort == ReasoningEffortLevel.Minimal)
+                {
+                    effort.Add("effort", "minimal");
+                }
+                else if (ReasoningEffort == ReasoningEffortLevel.Low)
                 {
                     effort.Add("effort", "low");
                 }
@@ -78,6 +86,11 @@ namespace TimHanewich.Foundry.OpenAI.Responses
                 {
                     effort.Add("effort", "high");
                 }
+                else if (ReasoningEffort == ReasoningEffortLevel.XHigh)
+                {
+                    effort.Add("effort", "xhigh");
+                }
+
                 ToReturn.Add("reasoning", effort);
             }
 
