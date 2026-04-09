@@ -6,8 +6,8 @@ namespace TimHanewich.Foundry.OpenAI.Responses
     public class StructuredOutputSchema
     {
         public string Name {get; set;}
-        public bool Strict {get; set;}
-        public JObject Schema {get; set;}
+        public bool Strict {get; set;} 
+        public JObject Schema {get; set;}     //Note: this library TRUSTS you have the schema correct
 
         public StructuredOutputSchema()
         {
