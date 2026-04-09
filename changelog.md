@@ -15,3 +15,4 @@
 |0.9.0|`e7b285ee08752732369708910eb7fdcb2dad7f83`|Added ability to include images via `InputImage` and recorded `model` property in response|
 |0.10.0|`f585b61d85506573fc88a90a96ff81f93d854760`|Added `InputImageDetail` property to `InputImage`|
 |0.10.1|`5aecf2dd7e6a23ecdb5494b66d9a977ea1a1ae48`|`assistant` messages that are added as input are now correctly classified as `output_text`|
+|0.11.0|`a183d365478cd490be2ac1e29b0f1c26afe5b4f0`|Added Structued Output support, updated reasoning effort levels, and added verbosity support|
