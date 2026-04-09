@@ -3,13 +3,13 @@ using Newtonsoft.Json.Linq;
 
 namespace TimHanewich.Foundry.OpenAI.Responses
 {
-    public class JsonSchema
+    public class StructuredOutputSchema
     {
         public string Name {get; set;}
         public bool Strict {get; set;}
         public JObject Schema {get; set;}
 
-        public JsonSchema()
+        public StructuredOutputSchema()
         {
             Name = string.Empty;
             Strict = true;

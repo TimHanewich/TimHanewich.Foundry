@@ -12,7 +12,7 @@ namespace TimHanewich.Foundry.OpenAI.Responses
         public List<Tool> Tools {get; set;}
         public ReasoningEffortLevel? ReasoningEffort {get; set;}
         public ResponseFormat RequestedFormat {get; set;}
-        public JsonSchema? StructuredOutputSchema {get; set;} //if they selected StructuredOutput as ResponseFormat, the schema they supply (can get it from https://transform.tools/json-to-json-schema)
+        public StructuredOutputSchema? OutputSchema {get; set;} //if they selected StructuredOutput as ResponseFormat, the schema they supply (can get it from https://transform.tools/json-to-json-schema)
         public bool Background {get; set;} //If it is a "background" (asynchronous) request where you submit it, it returns "got it" and you later call again to check on it.
 
         public ResponseRequest()
@@ -96,12 +96,12 @@ namespace TimHanewich.Foundry.OpenAI.Responses
             }
             else if (RequestedFormat == ResponseFormat.StructuredOutput)
             {
-                if (StructuredOutputSchema == null)
+                if (OutputSchema == null)
                 {
                     throw new Exception("You specified '" + RequestedFormat.ToString() + "' as the output format but did NOT provide a StructuredOutputSchema. That must be provided.");
                 }
                 JObject jo_text = new JObject();
-                jo_text.Add("format", StructuredOutputSchema.ToJSON());
+                jo_text.Add("format", OutputSchema.ToJSON());
                 ToReturn.Add("text", jo_text);
             }
 
