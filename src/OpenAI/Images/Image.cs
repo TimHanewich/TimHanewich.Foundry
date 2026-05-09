@@ -10,5 +10,10 @@ namespace TimHanewich.Foundry.OpenAI.Images
         {
             ImageBase64 = string.Empty;
         }
+
+        public Image(string b64)
+        {
+            ImageBase64 = b64;
+        }
     }
 }

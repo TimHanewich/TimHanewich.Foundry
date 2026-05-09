@@ -35,10 +35,9 @@ namespace TimHanewich.Foundry.OpenAI.Images
             JObject payload = JObject.Parse(content);
 
             //Parse
-            Console.WriteLine(payload.ToString());
+            ImageGeneration ToReturn = ImageGeneration.Parse(payload);
 
-            return new ImageGeneration();
-
+            return ToReturn;
         }
     }
 }
