@@ -8,28 +8,6 @@ namespace TimHanewich.Foundry.OpenAI.Responses
 {
     public static class FoundryResourceExtensions
     {
-        private static HttpRequestMessage PrepareRequestMessage(this FoundryResource fr)
-        {
-            //Prepare HTTP Request
-            HttpRequestMessage req = new HttpRequestMessage();
-
-            //Plug in authentication
-            if (fr.ApiKey != null) //default to using the API key (i.e. if they provide both for some reason, use API key)
-            {
-                req.Headers.Add("api-key", fr.ApiKey);
-            }
-            else if (fr.AccessToken != null)
-            {
-                req.Headers.Add("Authorization", "Bearer " + fr.AccessToken);
-            }
-            else // If neither are provided
-            {
-                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + fr.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
-            }
-
-            return req;
-        }
-
         private static Response ParseResponseFromPayload(JObject payload)
         {
             //To return

@@ -34,5 +34,27 @@ namespace TimHanewich.Foundry
             Uri u = new Uri(original);
             return u.GetLeftPart(UriPartial.Authority);
         }
+
+        public HttpRequestMessage PrepareRequestMessage()
+        {
+            //Prepare HTTP Request
+            HttpRequestMessage req = new HttpRequestMessage();
+
+            //Plug in authentication
+            if (ApiKey != null) //default to using the API key (i.e. if they provide both for some reason, use API key)
+            {
+                req.Headers.Add("api-key", ApiKey);
+            }
+            else if (AccessToken != null)
+            {
+                req.Headers.Add("Authorization", "Bearer " + AccessToken);
+            }
+            else // If neither are provided
+            {
+                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + fr.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
+            }
+
+            return req;
+        }
     }
 }
