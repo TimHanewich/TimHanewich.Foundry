@@ -4,11 +4,13 @@ namespace TimHanewich.Foundry.OpenAI.Images
 {
     public class ImageGeneration
     {
-        public string ImageBase64 {get; set;}
+        public int InputTokens {get; set;}
+        public int OutputTokens {get; set;}
+        public Image[] Images {get; set;}
 
         public ImageGeneration()
         {
-            ImageBase64 = string.Empty;
+            Images = new Image[]{};
         }
     }
 }
