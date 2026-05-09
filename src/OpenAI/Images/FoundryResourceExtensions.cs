@@ -39,5 +39,36 @@ namespace TimHanewich.Foundry.OpenAI.Images
 
             return ToReturn;
         }
+
+        public static async Task<ImageGeneration> EditImageAsync(this FoundryResource fr, ImageEditRequest ier)
+        {
+            //Construct URL
+            UriBuilder builder = new UriBuilder(fr.Endpoint);
+            builder.Path = "/openai/v1/images/edits";
+            string endpoint = builder.Uri.ToString();
+
+            //Prepare HTTP request
+            HttpRequestMessage req = fr.PrepareRequestMessage();
+            req.Method = HttpMethod.Post;
+            req.RequestUri = new Uri(endpoint);
+            req.Content = ier.Prepare();
+
+            //Make API call
+            HttpClient hc = new HttpClient();
+            hc.Timeout = new TimeSpan(24, 0, 0);
+            HttpResponseMessage resp = await hc.SendAsync(req, HttpCompletionOption.ResponseHeadersRead);
+            string content = await resp.Content.ReadAsStringAsync();
+            if (resp.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception("Call to model failed with code '" + resp.StatusCode.ToString() + "'. Msg: " + content);
+            }
+            JObject payload = JObject.Parse(content);
+
+            //Parse
+            ImageGeneration ToReturn = ImageGeneration.Parse(payload);
+
+            return ToReturn;
+        }
+
     }
 }
