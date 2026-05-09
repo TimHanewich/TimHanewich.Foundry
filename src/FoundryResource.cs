@@ -51,7 +51,7 @@ namespace TimHanewich.Foundry
             }
             else // If neither are provided
             {
-                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + fr.Endpoint + "'. One of these is required to authenticate with the Foundry service!");
+                throw new Exception("Aborting call to Foundry service: neither an API key nor Access Token was provided to access Foundry project at '" + Endpoint + "'. One of these is required to authenticate with the Foundry service!");
             }
 
             return req;

@@ -18,6 +18,7 @@ namespace TimHanewich.Foundry.OpenAI.Images
         {
             Model = string.Empty;
             Prompt = string.Empty;
+            Count = 1; //default
         }
 
         public void SetCommonSize(ImageSize size)

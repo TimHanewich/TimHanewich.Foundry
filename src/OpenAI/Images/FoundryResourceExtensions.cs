@@ -11,7 +11,7 @@ namespace TimHanewich.Foundry.OpenAI.Images
         public static async Task<ImageGeneration> GenerateImageAsync(this FoundryResource fr, ImageGenerationRequest request)
         {
             //Construct URL
-            UriBuilder builder = new UriBuilder();
+            UriBuilder builder = new UriBuilder(fr.Endpoint);
             builder.Path = "/openai/v1/images/generations";
             string endpoint = builder.Uri.ToString();
 
@@ -21,7 +21,7 @@ namespace TimHanewich.Foundry.OpenAI.Images
             req.RequestUri = new Uri(endpoint);
 
             //Add body
-            req.Content = new StringContent(request.ToJSON().ToString());
+            req.Content = new StringContent(request.ToJSON().ToString(), Encoding.UTF8, "application/json");
 
             //Make API call
             HttpClient hc = new HttpClient();
