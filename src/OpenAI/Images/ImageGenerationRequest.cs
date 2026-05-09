@@ -13,12 +13,14 @@ namespace TimHanewich.Foundry.OpenAI.Images
         public int Height {get; set;}
         public string Prompt {get; set;}
         public int Count {get; set;}
+        public ImageQuality Quality {get; set;}
 
         public ImageGenerationRequest()
         {
             Model = string.Empty;
             Prompt = string.Empty;
             Count = 1; //default
+            Quality = ImageQuality.Auto;
         }
 
         public void SetCommonSize(ImageSize size)
@@ -34,6 +36,24 @@ namespace TimHanewich.Foundry.OpenAI.Images
             ToReturn.Add("prompt", Prompt);
             ToReturn.Add("size", Width.ToString() + "x" + Height.ToString());
             ToReturn.Add("n", Count);
+
+            //Quality
+            if (Quality == ImageQuality.Auto)
+            {
+                ToReturn.Add("quality", "auto");
+            }
+            else if (Quality == ImageQuality.Low)
+            {
+                ToReturn.Add("quality", "low");
+            }
+            else if (Quality == ImageQuality.Medium)
+            {
+                ToReturn.Add("quality", "medium");
+            }
+            else if (Quality == ImageQuality.High)
+            {
+                ToReturn.Add("quality", "high");
+            }
 
             return ToReturn;
         }
