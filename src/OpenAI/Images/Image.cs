@@ -15,5 +15,11 @@ namespace TimHanewich.Foundry.OpenAI.Images
         {
             ImageBase64 = b64;
         }
+
+        public void Save(string path)
+        {
+            byte[] imgbytes = Convert.FromBase64String(ImageBase64);
+            File.WriteAllBytes(path, imgbytes);
+        }
     }
 }
