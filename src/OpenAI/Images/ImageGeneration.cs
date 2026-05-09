@@ -24,7 +24,7 @@ namespace TimHanewich.Foundry.OpenAI.Images
             JProperty? prop_data = payload.Property("data");
             if (prop_data != null)
             {
-                if (prop_data.Type == JTokenType.Array)
+                if (prop_data.Value.Type == JTokenType.Array)
                 {
                     JArray dataJArray = (JArray)prop_data.Value;
                     foreach (JObject jo in dataJArray)
@@ -38,6 +38,7 @@ namespace TimHanewich.Foundry.OpenAI.Images
                     }
                 }
             }
+            ToReturn.Images = imgs.ToArray();
 
             //Token usage: Input Tokens
             JToken? InputTokens = payload.SelectToken("usage.input_tokens");        
