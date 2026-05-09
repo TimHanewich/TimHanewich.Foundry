@@ -12,6 +12,7 @@
 - 🛠️ **Native Tooling**: Strongly-typed classes for Function Calling and tool result handling.
 - 📦 **Structured Data**: Built-in support for JSON Mode for structured model outputs.
 - 🖼️ **Vision**: Send images (local files or URLs) alongside text prompts via `InputImage`.
+- 🎨 **Image Generation & Editing**: Generate images from text prompts and edit existing images via `ImageGenerationRequest` and `ImageEditRequest`.
 - ⏳ **Background Responses**: Submit long-running requests asynchronously and retrieve results later.
 - 🧠 **Reasoning Effort**: Control reasoning intensity for reasoning-capable models.
 - 🚀 **Modern .NET**: Built from the ground up to support the latest .NET 10+ features.
@@ -367,6 +368,72 @@ You can control the fidelity at which the model processes the image using `Input
 InputImage img = InputImage.FromURL("https://example.com/photo.jpg");
 img.Detail = InputImageDetail.High; // Low, High, Original, or Auto (default)
 msg.Images.Add(img);
+```
+
+## Image Generation
+You can generate images from text prompts using the `ImageGenerationRequest` class and `GenerateImageAsync` extension method:
+```C#
+using TimHanewich.Foundry;
+using TimHanewich.Foundry.OpenAI.Images;
+
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
+
+//Create an image generation request
+ImageGenerationRequest igr = new ImageGenerationRequest();
+igr.Model = "gpt-image-2"; //the name of your image model deployment in Foundry
+igr.Prompt = "A purple rainbow.";
+igr.Width = 1024;
+igr.Height = 1024;
+igr.Count = 4; //number of images to generate
+igr.Quality = ImageQuality.Low; //Auto, Low, Medium, or High
+
+//Call to API service
+ImageGeneration ig = await fr.GenerateImageAsync(igr);
+
+//Save each generated image to disk
+foreach (Image i in ig.Images)
+{
+    string path = @"C:\output\image-" + Guid.NewGuid().ToString() + ".png";
+    i.Save(path);
+}
+```
+
+The `ImageGeneration` result includes `InputTokens`, `OutputTokens`, and an `Images` array. Each `Image` exposes `ImageBase64` (the raw base64 data) and a `Save(path)` convenience method to write directly to a file.
+
+## Image Editing
+You can edit or combine existing images using the `ImageEditRequest` class and `EditImageAsync` extension method. Attach one or more source images via `AttachedImage`:
+```C#
+using TimHanewich.Foundry;
+using TimHanewich.Foundry.OpenAI.Images;
+
+//Define the Foundry Resource
+FoundryResource fr = new FoundryResource("https://myfoundry-resource.services.ai.azure.com");
+fr.ApiKey = "6ElIJZ2jsMM...";
+
+//Create an image edit request
+ImageEditRequest ier = new ImageEditRequest();
+ier.Model = "gpt-image-2";
+ier.Prompt = "Make a hybrid of these two.";
+ier.Count = 1;
+ier.Width = 1024;
+ier.Height = 1024;
+ier.Quality = ImageQuality.Low; //Auto, Low, Medium, or High
+
+//Attach source images from local file paths
+ier.AttachedImages.Add(new AttachedImage(@"C:\Photos\ferrari.jpg"));
+ier.AttachedImages.Add(new AttachedImage(@"C:\Photos\f150.jpg"));
+
+//Call to API service
+ImageGeneration ig = await fr.EditImageAsync(ier);
+
+//Save each resulting image to disk
+foreach (Image i in ig.Images)
+{
+    string path = @"C:\output\image-" + Guid.NewGuid().ToString() + ".png";
+    i.Save(path);
+}
 ```
 
 ## Background (Async) Responses
