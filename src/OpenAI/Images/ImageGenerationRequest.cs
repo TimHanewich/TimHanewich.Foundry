@@ -6,13 +6,19 @@ namespace TimHanewich.Foundry.OpenAI.Images
 {
     public class ImageGenerationRequest
     {
-        public ImageSize Size {get; set;}
+        public int Width {get; set;}
+        public int Height {get; set;}
         public string Prompt {get; set;}
         public int Count {get; set;}
 
         public ImageGenerationRequest()
         {
             Prompt = string.Empty;
+        }
+
+        public void SetCommonSize(ImageSize size)
+        {
+            //Set width + height accordingly
         }
     }
 }
